@@ -3,11 +3,40 @@
   <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
 </a>
 
+<a href="https://www.npmjs.com/package/GPToken">
+  <img src="https://img.shields.io/npm/v/GPToken.svg" alt="npm version">
+</a>
+
+New
+
+[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
+
+Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
+
+[![GitHub last commit](https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder)](https://github.com/syonfox/GPT-3-Encoder/commits)
+[![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/GPT-3-Encoder/actions)
+[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/syonfox/GPT-3-Encoder/tree/GPToken)
+
+
+# TLDR
+```
+npm install gptoken
+const gptoken = require('gptoken')
+
+let tokens = gptoken.encode("hello world, we all share a goal of life")
+console.log("Tokens: ", tokens);
+console.log("TokenStats: ", JSON.stringify(gptoken.tokenStats(tokens)));
+
+//or browser demo
+firefox ../node_modules/gptoken/browser.html
+```
+
 # Fork Purpose 
  I have created this to add general gpt helper functionality as well as creat a compleat pakage.
+
  The plan is to clean up and stabilize this original implementation. 
 
-I would like to then make this usefully for other models and features.
+ I would like to then make this usefully for other models and features.
 
 # Roadmap 
   Improved performance
@@ -30,9 +59,8 @@ documentation.
 To install with npm:
 
 ```
-npm install GPToken
-# 
-or 
+npm install gptoken
+or old
 npm install @syonfox/GPT3-encoder
 
 ```
@@ -41,7 +69,7 @@ npm install @syonfox/GPT3-encoder
 
 The main interface is defined in `index.js or index.d.ts`
 
-THe code is in `ENcoder.js`
+The code is in `Encoder.js`
 
 The Encoding data/ maps are in the bpe_data directory this is loaded by Encoder to perfrom the conversion.
 
@@ -57,19 +85,6 @@ and one using the browserify version in a html page `npm run browser`
 
 ## Usage
 
-<a href="https://www.npmjs.com/package/GPToken">
-  <img src="https://img.shields.io/npm/v/GPToken.svg" alt="npm version">
-</a>
-
-
-
-[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://latitudegames.github.io/GPT-3-Encoder/)
-
-Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
-
-[![GitHub last commit](https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder)](https://github.com/latitudegames/GPT-3-Encoder/commits)
-[![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/latitudegames/GPT-3-Encoder/actions)
-[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/latitudegames/GPT-3-Encoder/)
 
 Compatible with Node >= 12
 

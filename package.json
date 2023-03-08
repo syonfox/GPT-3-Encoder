@@ -22,8 +22,8 @@
     "build_bpe_ranks": "node bpe_data/build_bpe_ranks.js",
     "build_encoder": "node bpe_data/build_encoder.js",
     "build": "browserify index.js -s gpt3encoder -o browser.js",
-    "browser": "firefox example/browser.html",
-    "demo": "node example/demo.js"
+    "browser": "firefox ./browser.html",
+    "demo": "node demo.js"
   },
   "repository": {
     "type": "git",

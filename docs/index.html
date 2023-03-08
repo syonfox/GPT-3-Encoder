@@ -43,29 +43,55 @@
 
 
     <section>
-        <article><h1>GPT-3-Encoder</h1>
+        <article><h1>GPToken is an expanded project based on the original</h1>
+<a href="https://www.npmjs.com/package/gpt-3-encoder">
+  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
+</a>
+<h1>Fork Purpose</h1>
+<p>I have created this to add general gpt helper functionality as well as creat a compleat pakage.
+The plan is to clean up and stabilize this original implementation.</p>
+<p>I would like to then make this usefully for other models and features.</p>
+<h1>Roadmap</h1>
+<p>Improved performance
+More utilities function.</p>
+<p>More research on how to interact with GPT models.</p>
+<p>Add a simple elagent openai api integration so this can be a minimal frontend and backend base.</p>
+<h1>Intro</h1>
 <p>Javascript library for encoding and decoding text using Byte Pair Encoding (BPE), as used in GPT-2 and GPT-3 models by
 OpenAI. This is a fork of the original python implementation by OpenAI, which can be found here.</p>
 <p>This fork includes additional features such as the countTokens and tokenStats functions, as well as updated
 documentation.</p>
 <h2>Installation</h2>
 <p>To install with npm:</p>
-<pre class="prettyprint source"><code>npm install gpt-3-encoder
+<pre class="prettyprint source"><code>npm install GPToken
+# 
+or 
+npm install @syonfox/GPT3-encoder
+
 </code></pre>
+<h1>Overview</h1>
+<p>The main interface is defined in <code>index.js or index.d.ts</code></p>
+<p>THe code is in <code>ENcoder.js</code></p>
+<p>The Encoding data/ maps are in the bpe_data directory this is loaded by Encoder to perfrom the conversion.</p>
+<p>There are useful scripts defined in <code>pakage.json</code></p>
+<p>The tests are using <code>jest</code> and are defined in <code>Encoder.test.js</code></p>
+<p>docs are built using jsdoc <code>npm run doc</code> and we need to <code>cp browser.* docs/</code> after build so demo works on github pages</p>
+<p>There are 2 demos one using nodejs <code>npm run demo</code>
+and one using the browserify version in a html page <code>npm run browser</code></p>
 <h2>Usage</h2>
-<a href="https://www.npmjs.com/package/gpt-3-encoder">
-  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
+<a href="https://www.npmjs.com/package/GPToken">
+  <img src="https://img.shields.io/npm/v/GPToken.svg" alt="npm version">
 </a>
 <p><a href="https://latitudegames.github.io/GPT-3-Encoder/"><img src="https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen" alt="JSDocs"></a></p>
-<p>Also check out the browser demo <a href="https://latitudegames.github.io/GPT-3-Encoder/browser.html">browser demo</a></p>
+<p>Also check out the browser demo <a href="https://syonfox.github.io/GPT-3-Encoder/browser.html">browser demo</a></p>
 <p><a href="https://github.com/latitudegames/GPT-3-Encoder/commits"><img src="https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder" alt="GitHub last commit"></a>
 <a href="https://github.com/latitudegames/GPT-3-Encoder/actions"><img src="https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg" alt="example workflow"></a>
 <a href="https://github.com/latitudegames/GPT-3-Encoder/"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="github"></a></p>
 <p>Compatible with Node &gt;= 12</p>
 <p>To use the library in your project, import it as follows:</p>
-<pre class="prettyprint source lang-js"><code>const GPT3Encoder = require('gpt-3-encoder');
+<pre class="prettyprint source lang-js"><code>const GPToken = require('gptoken');
 </code></pre>
-<h3>Additional Features</h3>
+<h3>Additional Features (check out the docs :)</h3>
 <p>In addition to the original <code>encoding</code> and <code>decoding</code> functions, this fork includes the following additional features:
 <code>countTokens(text: string): number</code></p>
 <p>This function returns the number of tokens in the provided text, after encoding it using BPE.
@@ -73,12 +99,24 @@ documentation.</p>
 <p>This function returns an object containing statistics about the tokens in the provided text, after encoding it using
 BPE. The returned object includes the following properties:</p>
 <ul>
-<li><code>total</code>: the total number of tokens in the text.</li>
-<li><code>unique</code>: the number of unique tokens in the text.</li>
-<li><code>frequencies</code>: an object containing the frequency of each token in the text.</li>
-<li><code>postions</code>: an object mapping tokens to positions in the encoded string</li>
-<li><code>tokens</code>: same as the output to tokens
-Compatibility</li>
+<li>
+<p><code>total</code>: the total number of tokens in the text.</p>
+</li>
+<li>
+<p><code>unique</code>: the number of unique tokens in the text.</p>
+</li>
+<li>
+<p><code>frequencies</code>: an object containing the frequency of each token in the text.</p>
+</li>
+<li>
+<p><code>postions</code>: an object mapping tokens to positions in the encoded string</p>
+</li>
+<li>
+<p><code>tokens</code>: same as the output to tokens</p>
+</li>
+<li>
+<p>Compatibility</p>
+</li>
 </ul>
 <p>This library is compatible with both Node.js and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
 Credits</p>
@@ -87,9 +125,9 @@ Credits</p>
 <p>See browser.html and demo.js
 Note you may need to include it from the appropriate place in node modules / npm package name</p>
 <pre class="prettyprint source lang-js"><code>
-import {encode, decode, countTokens, tokenStats} from &quot;gpt-3-encoder&quot;
-//or
-const {encode, decode, countTokens, tokenStats} = require('gpt-3-encoder')
+import {encode, decode, countTokens, tokenStats} from &quot;gptoken&quot;
+//or note you might need @syonfox/gpt-3-encoder if thats what you npm install
+const {encode, decode, countTokens, tokenStats} = require('gptoken')
 
 const str = 'This is an example sentence to try encoding out on!'
 const encoded = encode(str)
@@ -112,7 +150,8 @@ console.log('We can decode it back into:\n', decoded)
 <h2>Developers</h2>
 <p>I have added som other examples to the examples folder.
 Please take a look at package.json for how to do stuff</p>
-<pre class="prettyprint source lang-sh"><code>git clone https://github.com/latitudegames/GPT-3-Encoder.git
+<pre class="prettyprint source lang-sh"><code>//the original repo
+git clone https://github.com/latitudegames/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
 
@@ -181,7 +220,7 @@ processing).</li>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Mar 08 2023 08:08:38 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Mar 08 2023 10:04:29 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
