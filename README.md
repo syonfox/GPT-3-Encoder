@@ -31,6 +31,12 @@ console.log("TokenStats: ", JSON.stringify(gptoken.tokenStats(tokens)));
 firefox ../node_modules/gptoken/browser.html
 ```
 
+```sh
+cd demo_app
+npm install 
+npm start
+```
+
 # Fork Purpose 
  I have created this to add general gpt helper functionality as well as creat a compleat pakage.
 

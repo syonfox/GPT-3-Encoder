@@ -1,0 +1,15 @@
+{
+  "name": "demo_app",
+  "version": "1.0.0",
+  "description": "A demo app using gptoken ",
+  "main": "demo.js",
+  "scripts": {
+    "start": "node demo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "syonfox",
+  "license": "ISC",
+  "dependencies": {
+    "gptoken": "^0.0.0"
+  }
+}

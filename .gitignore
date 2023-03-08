@@ -2,3 +2,4 @@ node_modules
 .idea
 .env
 .npmrc
+demo_app/node_modules

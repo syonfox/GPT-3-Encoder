@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/latitudegames/GPT-3-Encoder.git"
+    "url": "git+https://github.com/syonfox/GPT-3-Encoder.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/latitudegames/GPT-3-Encoder/issues"
+    "url": "https://github.com/syonfox/GPT-3-Encoder/issues"
   },
   "homepage": "https://github.com/latitudegames/GPT-3-Encoder#readme",
   "devDependencies": {
