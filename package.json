@@ -1,6 +1,6 @@
 {
-  "name": "gpt-3-encoder",
-  "version": "1.2.0-rc5",
+  "name": "gptoken",
+  "version": "0.0.0",
   "description": "Javascript BPE Encoder Decoder for GPT-2 / GPT-3. The \"gpt-3-encoder\" module provides functions for encoding and decoding text using the Byte Pair Encoding (BPE) algorithm. It can be used to process text data for input into machine learning models, or to convert tokenized text back into human-readable format. It also includes functions for counting tokens in a given text and generating statistics about the tokens in a string or array.",
   "main": "index.js",
   "types": "./index.d.ts",
@@ -9,24 +9,22 @@
     "Encoder.js",
     "encoder.json",
     "encoder.js",
-    "bpe_ranks.js",
+    "bpe_data/bpe_ranks.js",
     "index.js",
     "index.d.ts",
     "browser.html",
     "encoder.json",
     "encoder.py",
-    "vocab.bpe"
+    "bpe_data/vocab.bpe"
   ],
   "scripts": {
     "docs": "jsdoc Encoder.js -r README.md -d docs && cp browser.* docs",
-    "build_bpe_ranks": "node build_bpe_ranks.js",
-    "build_encoder": "node build_encoder.js",
-
-    "build": "browserify index.js -s gpt3encoder -o browser.js",
     "test": "jest",
+    "build_bpe_ranks": "node bpe_data/build_bpe_ranks.js",
+    "build_encoder": "node bpe_data/build_encoder.js",
+    "build": "browserify index.js -s gpt3encoder -o browser.js",
     "browser": "firefox example/browser.html",
     "demo": "node example/demo.js"
-
   },
   "repository": {
     "type": "git",

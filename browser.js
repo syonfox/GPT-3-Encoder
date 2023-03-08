@@ -2,10 +2,10 @@
 (function (Buffer){(function (){
 
 
-const encoder = require("./encoder");
+const encoder = require("./bpe_data/encoder");
 
 // This file includes code which was modified from https://github.com/openai/gpt-2
-const bpe_ranks = require("./bpe_ranks");
+const bpe_ranks = require("./bpe_data/bpe_ranks");
 
 //The old version used to include this but i prebuild it into a js file to be loaded by browserify
 //todo delete old comments when not needed

@@ -1,4 +1,23 @@
-# GPT-3-Encoder
+# GPToken is an expanded project based on the original 
+<a href="https://www.npmjs.com/package/gpt-3-encoder">
+  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
+</a>
+
+# Fork Purpose 
+ I have created this to add general gpt helper functionality as well as creat a compleat pakage.
+ The plan is to clean up and stabilize this original implementation. 
+
+I would like to then make this usefully for other models and features.
+
+# Roadmap 
+  Improved performance
+  More utilities function.
+
+  More research on how to interact with GPT models.
+
+  Add a simple elagent openai api integration so this can be a minimal frontend and backend base.
+
+# Intro
 
 Javascript library for encoding and decoding text using Byte Pair Encoding (BPE), as used in GPT-2 and GPT-3 models by
 OpenAI. This is a fork of the original python implementation by OpenAI, which can be found here.
@@ -11,20 +30,42 @@ documentation.
 To install with npm:
 
 ```
-npm install gpt-3-encoder
+npm install GPToken
+# 
+or 
+npm install @syonfox/GPT3-encoder
+
 ```
+
+# Overview 
+
+The main interface is defined in `index.js or index.d.ts`
+
+THe code is in `ENcoder.js`
+
+The Encoding data/ maps are in the bpe_data directory this is loaded by Encoder to perfrom the conversion.
+
+There are useful scripts defined in `pakage.json`
+
+The tests are using `jest` and are defined in `Encoder.test.js`
+
+docs are built using jsdoc `npm run doc` and we need to `cp browser.* docs/` after build so demo works on github pages 
+
+There are 2 demos one using nodejs `npm run demo` 
+and one using the browserify version in a html page `npm run browser`
+
 
 ## Usage
 
-<a href="https://www.npmjs.com/package/gpt-3-encoder">
-  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
+<a href="https://www.npmjs.com/package/GPToken">
+  <img src="https://img.shields.io/npm/v/GPToken.svg" alt="npm version">
 </a>
 
 
 
 [![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://latitudegames.github.io/GPT-3-Encoder/)
 
-Also check out the browser demo [browser demo](https://latitudegames.github.io/GPT-3-Encoder/browser.html)
+Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/latitudegames/GPT-3-Encoder)](https://github.com/latitudegames/GPT-3-Encoder/commits)
 [![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/latitudegames/GPT-3-Encoder/actions)
@@ -35,10 +76,10 @@ Compatible with Node >= 12
 To use the library in your project, import it as follows:
 
 ```js
-const GPT3Encoder = require('gpt-3-encoder');
+const GPToken = require('gptoken');
 ```
 
-### Additional Features
+### Additional Features (check out the docs :)
 
 In addition to the original `encoding` and `decoding` functions, this fork includes the following additional features:
 `countTokens(text: string): number`
@@ -54,7 +95,8 @@ BPE. The returned object includes the following properties:
 - `frequencies`: an object containing the frequency of each token in the text.
 - `postions`: an object mapping tokens to positions in the encoded string
 - `tokens`: same as the output to tokens
-Compatibility
+
+- Compatibility
 
 This library is compatible with both Node.js and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
 Credits
@@ -68,9 +110,9 @@ Note you may need to include it from the appropriate place in node modules / npm
 
 ```js
 
-import {encode, decode, countTokens, tokenStats} from "gpt-3-encoder"
+import {encode, decode, countTokens, tokenStats} from "gptoken"
 //or note you might need @syonfox/gpt-3-encoder if thats what you npm install
-const {encode, decode, countTokens, tokenStats} = require('gpt-3-encoder')
+const {encode, decode, countTokens, tokenStats} = require('gptoken')
 
 const str = 'This is an example sentence to try encoding out on!'
 const encoded = encode(str)
@@ -97,6 +139,7 @@ I have added som other examples to the examples folder.
 Please take a look at package.json for how to do stuff
 
 ```sh
+//the original repo
 git clone https://github.com/latitudegames/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
