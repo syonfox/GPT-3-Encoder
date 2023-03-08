@@ -3,8 +3,8 @@
   <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
 </a>
 
-<a href="https://www.npmjs.com/package/GPToken">
-  <img src="https://img.shields.io/npm/v/GPToken.svg" alt="npm version">
+<a href="https://www.npmjs.com/package/gptoken">
+  <img src="https://img.shields.io/npm/v/gptoken.svg" alt="npm version">
 </a>
 
 New
@@ -91,8 +91,10 @@ Compatible with Node >= 12
 To use the library in your project, import it as follows:
 
 ```js
-const GPToken = require('gptoken');
+const gptoken = require('gptoken');
 ```
+
+## TODO add nextjs browser node and react examples for browser ejs node and other syntax
 
 ### Additional Features (check out the docs :)
 
@@ -105,7 +107,7 @@ This function returns the number of tokens in the provided text, after encoding 
 This function returns an object containing statistics about the tokens in the provided text, after encoding it using
 BPE. The returned object includes the following properties:
 
-- `total`: the total number of tokens in the text.
+- `count`: the total number of tokens in the text.
 - `unique`: the number of unique tokens in the text.
 - `frequencies`: an object containing the frequency of each token in the text.
 - `postions`: an object mapping tokens to positions in the encoded string
@@ -155,7 +157,7 @@ Please take a look at package.json for how to do stuff
 
 ```sh
 //the original repo
-git clone https://github.com/latitudegames/GPT-3-Encoder.git
+git clone https://github.com/syonfox/GPT-3-Encoder.git
 
 cd GPT-3-Encoder
 
@@ -165,7 +167,7 @@ npm run test # run tests
 npm run docs # build docs
 
 npm run build # builds it for the browser
-npm run browser # launches demo inf firefox
+npm run browser # launches demo in firefox
 npm run demo # runs node.js demo
 
 
