@@ -5,16 +5,15 @@
   "main": "index.js",
   "types": "./index.d.ts",
   "files": [
-    "browser.js",
-    "Encoder.js",
-    "encoder.json",
-    "encoder.js",
-    "bpe_data/bpe_ranks.js",
     "index.js",
     "index.d.ts",
+    "Encoder.js",
+    "bpe_data/encoder.js",
+    "bpe_data/bpe_ranks.js",
+    "browser.js",
     "browser.html",
-    "encoder.json",
-    "encoder.py",
+    "bpe_data/encoder.py",
+    "bpe_data/encoder.json",
     "bpe_data/vocab.bpe"
   ],
   "scripts": {
