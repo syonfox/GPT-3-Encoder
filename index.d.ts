@@ -1,4 +1,6 @@
-declare module "gpt-3-encoder" {
+// declare module "gpt-3-encoder"
+declare module GPToken {
+
     export function encode(text: string): number[];
 
     export function decode(tokens: number[]): string;
@@ -15,4 +17,13 @@ declare module "gpt-3-encoder" {
         tokens: string[];
     }
 
+}
+// declare module "@syonfox/gpt-3-encoder" GPToken
+
+export function extendModule<T extends Record<string, any>>(moduleName: string, moduleToExtend: T): T {
+    return {
+        ...moduleToExtend,
+        __esModule: true,
+        default: moduleToExtend,
+    } as unknown as T & { default: T };
 }
