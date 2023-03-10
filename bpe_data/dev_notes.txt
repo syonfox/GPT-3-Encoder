@@ -4,8 +4,11 @@ encoder.py is the original script that uses encoder.json and vocab.bpe
 
 to perform token encoding
 
-We then compile encoder.js using node build_encoder.js
+We then compile encoderMapToTokens.js using node build_encoder.js
 and bpe_ranks.js using build_bpe_ranks.js
 
 these files both export the corresponding object for use in the main Encoder.js library.
 
+pip install tensorflow ...
+
+python encoder.py

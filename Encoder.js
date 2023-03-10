@@ -1,23 +1,48 @@
 
 
-const encoder = require("./bpe_data/encoder");
+const encoder = require("./bpe_data/encoderMapToTokens");
 
 // This file includes code which was modified from https://github.com/openai/gpt-2
 const bpe_ranks = require("./bpe_data/bpe_ranks");
 
+/**
+ * Returns an array of numbers between x and y (inclusive).
+ *
+ * @param {number} x - The starting number.
+ * @param {number} y - The ending number.
+ * @returns {number[]} - An array of numbers between x and y (inclusive).
+ */
 const range = (x, y) => {
     const res = Array.from(Array(y).keys()).slice(x)
     return res
 }
 
+/**
+ * Returns the Unicode code point of the first character in a string.
+ * In computer science, the term "ord" is short for "ordinal" or "order"
+ * @param {string} x - The string to get the code point of.
+ * @returns {number} - The Unicode code point of the first character in the string.
+ */
 const ord = x => {
     return x.charCodeAt(0)
 }
 
+/**
+ * Returns the character corresponding to a Unicode code point.
+ * inverse of ord
+ * @param {number} x - The Unicode code point to get the corresponding character for.
+ * @returns {string} - The character corresponding to the given Unicode code point.
+ */
 const chr = x => {
     return String.fromCharCode(x)
 }
 
+/**
+ * Encodes a given string as an array of string representations of its UTF-8 encoded bytes.
+ *
+ * @param {string} str - The string to encode.
+ * @returns {string[]} - An array of string representations of the UTF-8 encoded bytes of the input string.
+ */
 const encodeStr = str => {
     return Array.from(Buffer.from(str, 'utf-8')).map(x => x.toString());
 }
@@ -26,6 +51,12 @@ const decodeStr = arr => {
     return Buffer.from(arr).toString('utf-8')
 }
 
+
+/**
+ * Returns a mapping of byte values to their corresponding Unicode characters.
+ *
+ * @returns {Object.<number, string>} - A mapping of byte values to Unicode characters.
+ */
 function bytes_to_unicode() {
     const bs = range(ord('!'), ord('~') + 1).concat(range(ord('¡'), ord('¬') + 1), range(ord('®'), ord('ÿ') + 1))
 
@@ -48,6 +79,12 @@ function bytes_to_unicode() {
     return result
 }
 
+/**
+ * Returns a set of all the pairs of adjacent characters in a given string.
+ *
+ * @param {string} word - The string to get pairs of adjacent characters from.
+ * @returns {Set.<Array.<string>>} - A set of all the pairs of adjacent characters in the string.
+ */
 function get_pairs(word) {
     const pairs = new Set()
     let prev_char = word[0]
@@ -322,5 +359,8 @@ module.exports = {
     encode,
     decode,
     countTokens,
-    tokenStats
+    tokenStats,
+    util: {
+        ord,char,bpe, range, pat, get_pairs, bpe_ranks, en
+    }
 };

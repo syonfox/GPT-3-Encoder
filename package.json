@@ -8,7 +8,7 @@
     "index.js",
     "index.d.ts",
     "Encoder.js",
-    "bpe_data/encoder.js",
+    "bpe_data/encoderMapToTokens.js",
     "bpe_data/bpe_ranks.js",
     "browser.js",
     "browser.html",

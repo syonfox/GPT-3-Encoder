@@ -3,6 +3,6 @@ const path = require('path');
 
 const encoder = JSON.parse(fs.readFileSync(path.join(__dirname, './encoder.json')));
 
-console.log("Breaks stuff i think");
+console.log("Breaks stuff i think i might hav manualy made it a json -> js");
 
-fs.writeFileSync('./encoder2.js', `module.exports = ${JSON.stringify(encoder)};`);
+fs.writeFileSync('./encoderMapToTokens2.js', `module.exports = ${JSON.stringify(encoder)};`);

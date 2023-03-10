@@ -2,7 +2,7 @@
 (function (Buffer){(function (){
 
 
-const encoder = require("./bpe_data/encoder");
+const encoder = require("./bpe_data/encoderMapToTokens");
 
 // This file includes code which was modified from https://github.com/openai/gpt-2
 const bpe_ranks = require("./bpe_data/bpe_ranks");
