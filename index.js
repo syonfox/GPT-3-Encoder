@@ -1,8 +1,10 @@
-const { encode, decode, countTokens, tokenStats } = require("./Encoder");
+const { encode, decode, countTokens, tokenStats, util, maps } = require("./Encoder");
 
 module.exports = {
   encode,
   decode,
   countTokens,
-  tokenStats
+  tokenStats,
+  util,
+  maps
 };

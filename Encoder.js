@@ -116,6 +116,19 @@ const pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!
 //
 // Overall, this regular expression is used to split a string into an array of tokens by matching words, numbers, and non-letter, non-number characters, as well as leading and trailing whitespace and sequences of multiple whitespace characters within the string.
 
+
+/**
+ * This code sets up a decoder object to convert encoded tokens back to their original string form,
+ * by creating a mapping of the keys and values in the encoder object.
+ * It also sets up a byte encoder and decoder object for converting bytes to unicode characters and vice versa.
+ * Finally, it initializes a cache Map to store previously processed inputs for faster encoding.
+ *
+ * @member {Object} encoder - An object containing mappings of strings to numerical token values.
+ * @member {Object} decoder - An object containing mappings of numerical token values to their original string form.
+ * @member {Object} byte_encoder - An object containing mappings of byte values to their corresponding unicode characters.
+ * @member {Object} byte_decoder - An object containing mappings of unicode characters to their corresponding byte values.
+ * @member {Map} cache - A Map object used to cache previously processed inputs for faster encoding.
+ */
 const decoder = {}
 Object.keys(encoder).map(x => {
     decoder[encoder[x]] = x
@@ -355,12 +368,124 @@ function decode(tokens) {
     return text
 }
 
+
+/**
+ * Module for encoding and decoding text using byte pair encoding (BPE).
+ *
+ * @module gptoken
+ * @property {Function} encode - Function for encoding text using BPE.
+ * @property {Function} decode - Function for decoding text using BPE.
+ * @property {Function} countTokens - Function for counting the number of tokens in a BPE encoding.
+ * @property {Function} tokenStats - Function for computing statistics on the tokens in a BPE encoding.
+ * @property {Object} util - Utility functions used by the main functions.
+ * @property {Function} util.ord - Function for getting the Unicode code point of a character.
+ * @property {Function} util.chr - Function for getting the character corresponding to a Unicode code point.
+ * @property {number} util.bpe - Implements the Byte Pair Encoding (BPE) algorithm for subword tokenization.
+ * @property {Function} util.range - Function for generating a range of numbers.
+ * @property {RegExp} util.pat - Regular expression for matching token words in text.
+ * @property {Function} util.get_pairs - Function for getting all pairs of adjacent characters in a string.
+ * @property {function} encodeStr - Encodes a string as an array of UTF-8 byte values.
+ * @property {function} decodeStr - Decodes an array of UTF-8 byte values as a
+ * @property {Object.<string, number>} maps.bpe_ranks - Object mapping BPE tokens to their ranks.
+ * @property {Object.<string, number>} maps.encoder - Object mapping tokens to their integer representations.
+ * @property {Object.<string, string>} maps.decoder - Object mapping integer representations to their tokens.
+ * @property {Object.<string, string>} maps.byte_decoder - Object mapping UTF-8 byte values to their characters.
+ * @property {Object.<string, number>} maps.byte_encoder - Object mapping characters to their UTF-8 byte values.
+ *
+ * @example
+ *  const gptoken = require('gptoken');
+ *
+ * const text = 'The quick brown fox jumps over the lazy dog';
+ * const encoded = gptoken.encode(text);
+ * console.log('Encoded:', encoded.slice(0, 5).concat(['...']).concat(encoded.slice(-5)));
+ *
+ * const decoded = gptoken.decode(encoded);
+ * console.log('Decoded:', decoded);
+ *
+ * const count = gptoken.countTokens(text);
+ * console.log('Token Count:', count);
+ *
+ * const stats = gptoken.tokenStats(encoded);
+ * console.log('Token Stats:', JSON.stringify(stats, null, 4));
+ *
+ *
+ * //OUTPUT
+ * Encoded: [ 464, 2068, 7586, 21831, 18045, '...', 262, 16931, 3290 ]
+ * Decoded: The quick brown fox jumps over the lazy dog
+ * Token Count: 9
+ * Token Stats: {
+ *     "count": 9,
+ *     "unique": 9,
+ *     "frequency": {
+ *         "262": 1,
+ *         "464": 1,
+ *         "625": 1,
+ *         "2068": 1,
+ *         "3290": 1,
+ *         "7586": 1,
+ *         "16931": 1,
+ *         "18045": 1,
+ *         "21831": 1
+ *     },
+ *     "positions": {
+ *         "262": [
+ *             6
+ *         ],
+ *         "464": [
+ *             0
+ *         ],
+ *         "625": [
+ *             5
+ *         ],
+ *         "2068": [
+ *             1
+ *         ],
+ *         "3290": [
+ *             8
+ *         ],
+ *         "7586": [
+ *             2
+ *         ],
+ *         "16931": [
+ *             7
+ *         ],
+ *         "18045": [
+ *             4
+ *         ],
+ *         "21831": [
+ *             3
+ *         ]
+ *     },
+ *     "tokens": [
+ *         464,
+ *         2068,
+ *         7586,
+ *         21831,
+ *         18045,
+ *         625,
+ *         262,
+ *         16931,
+ *         3290
+ *     ]
+ * }
+ */
 module.exports = {
     encode,
     decode,
     countTokens,
     tokenStats,
     util: {
-        ord,char,bpe, range, pat, get_pairs, bpe_ranks, en
+        ord, chr, bpe, range, pat,
+        get_pairs,
+        encodeStr, decodeStr,
+    },
+    maps: {
+        encoder,
+        decoder,
+        byte_decoder,
+        byte_encoder,
+        bpe_ranks,
+        cache,
     }
+
 };

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aiia Demo</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="dark.css">
+</head>
+<body>
+
+<!--
+This is a div element with the id "header" which contains three child div elements with class "headerContainer", "headerElementLeft", "headerElementCenter", and "headerElementRight".
+The header container contains the header elements left, center, and right.
+The header element left contains a span element with the name "lights" which is used to switch between light and dark mode when clicked.
+The header element center contains a div element which in turn contains four span elements with the name "example" that are used to set an example prompt when clicked.
+The header element right contains an anchor link with an image inside of it.
+The anchor element links to the project source code on GitHub, and the image is a GitHub logo that when clicked, it opens the link to the source code in a new tab.
+-->
+<div id="header">
+    <div class="headerContainer">
+        <div class="headerElementLeft">
+            <span name="lights" title="Light/Dark Mode">
+                <!-- Image source is set via openai-api.js -->
+                <img id="logo" src="Yin_yang.svg" onclick="switchStylesheet()" height="21px" width="100px" title="Sopmac AI" />
+            </span>
+        </div>
+        <div class="headerElementCenter">
+            <div id="topExamples">
+                <!-- Top Examples created via openai-api.js -->
+            </div>
+        </div>
+<!--        <div id="gh-link" class="headerElementRight" style="text-align: right">-->
+<!--            <a href="https://github.com/IvanCampos/OpenAI-API" target="_blank">-->
+<!--                &lt;!&ndash; Image source is set via openai-api.js &ndash;&gt;-->
+<!--                <img id="gh-img" height="25px" width="25px" title="Source Code"/>-->
+<!--            </a>-->
+<!--        </div>-->
+    </div>
+</div>
+
+<!--
+This is a select element with the id "engines" which contains four option elements.
+Each option element represents one of the available OpenAI's GPT-3 models that can be selected by the user.
+Each option element has a value attribute which is the corresponding model's identifier and a text that describes the model's name and the cost per 750 words of text generation.
+This select element is used to select the OpenAI's GPT-3 model that should be used to generate the text completion and the cost per 750 words of text generation is displayed to the user as a reference.
+-->
+<select id="engines">
+    <option value="text-davinci-003">text-davinci-003 ($.02 per 750 words)</option>
+    <option value="text-curie-001">text-curie-001 ($.002 per 750 words)</option>
+    <option value="text-babbage-001">text-babbage-001 ($.0005 per 750 words)</option>
+    <option value="text-ada-001">text-ada-001 ($.0004 per 750 words)</option>
+    <option value="code-davinci-002">code-davinci-002 (Currently FREE)</option>
+</select>
+
+<!--
+This is a span element with the id "prompt" and class "textarea".
+The span element has the attribute 'contenteditable' set to true, which allows the user to edit the contents of the span element.
+The span element also has an attribute 'role' set to "textbox" which indicates that the span element is a textbox and a user can input text into it.
+This span element is used as an input field where the user can type their text prompt that they want to use to generate text completion.
+-->
+<span id="prompt" class="textarea" role="textbox" contenteditable></span>
+
+<!--
+This is a div element with the id "counter" that contains two span elements.
+The first span element has the name "counter" and id "charCount", it's used to display the number of characters entered in the prompt span element.
+The second span element has the name "counter" and id "characters" which displays the text "characters" to indicate that it's counting the number of characters in the prompt span element.
+This div element is used to show the user how many characters they've entered in the prompt span element and the text "characters" acts as a label for the number of characters.
+-->
+<div id="counter">
+    <span name="counter" id="charCount"></span>
+    <span name="counter" id="characters">characters</span>
+</div>
+
+<!--
+This is two button elements.
+The first button has an "onclick" attribute that calls the function "openAI_API_Completions()" when the button is clicked.
+The text inside the button element is "RUN AI".
+This button is used to initiate the process of generating text completion using OpenAI's GPT-3 API.
+The second button has an "onclick" attribute that calls the function "clearAll()" when the button is clicked.
+The text inside the button element is "CLEAR ALL".
+This button is used to clear the text in the prompt span element, the text in the response and receipt element, and reset the counter.
+-->
+<button name="run" onclick="openAI_API_Completions();">SUBMIT ✧･ﾟ</button>
+<button name="clear" onclick="clearAll()">CLEAR ALL</button>
+
+<!--
+This is two div elements.
+The first div element has an "id" attribute set to "response" and class "typing", it's used to display the AI generated response text after the user clicks the "RUN AI" button.
+The second div element has an "id" attribute set to "receipt" it's used to display the receipt of the transaction including cost, token count, and other details about the transaction.
+Both elements are used to display information about the AI generated response and the transaction details.
+-->
+<div id="response" class="typing"></div>
+<div id="receipt"></div>
+
+<!--
+This is a script element that includes the "openai-api.js" file which contains all the JavaScript code that handles the logic and functions for the AI text completion feature using OpenAI's GPT-3 API.
+This script file is responsible for handling the input, sending the request to the API, receiving the response, displaying the response and receipt, handling the styles and other functionality on the webpage.
+-->
+<script src="openai-api.js"></script>
+<script src="/node_modules/gptoken/browser.js"></script>
+<script>
+    /**
+     * This is a module that moniters a input / text areas .value field for change
+     * and then counts the tokens that will be used for the request.
+     * Note this will not know about the response cost. todo get that from server and also monitor api request for token usage on the server.
+     * then we are 50% of the way to monitization.
+     * @type {{}}
+     */
+    token_counter = {
+
+    }
+
+</script>
+
+
+</body>
+</html>

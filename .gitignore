@@ -3,3 +3,4 @@ node_modules
 .env
 .npmrc
 demo_app/node_modules
+demo_app/.env

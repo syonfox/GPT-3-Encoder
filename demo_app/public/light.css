@@ -1,0 +1,191 @@
+/*
+LIGHT MODE CSS
+This css code imports the google font 'Orbitron' for the font-family of the html element.
+It sets the max width of the html element to 70 characters, sets the margin and padding for the html element,
+sets the line-height and font-size of the html element, and sets the background-color of the html element to white.
+It also styles various other elements such as headings, paragraphs, unordered lists, ordered lists, buttons,
+select elements, tables, span elements, #counter, #header, and #response, and #receipt.
+It also positions the #header element as sticky and sets the width and text-align of the child elements of the .headerContainer class.
+ */
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+html {
+    font-family: "Poppins";
+    max-width: 70ch;
+    padding: 1em;
+    margin: auto;
+    line-height: 1;
+    font-size: 1em;
+    background-color: #fffff0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0.5em 0 0.5em;
+    color: black;
+}
+
+p, ul, ol {
+    margin-bottom: 1em;
+    color: #1d1d1d;
+    font-family: "Poppins";
+}
+
+button {
+    font-family: "Poppins";
+    background-color: #ec5c13;
+    border: none;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 2px 1px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[name="run"] {
+    font-family: "Poppins";
+    animation: tri-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes tri-pulse {
+    0% { background-color: #ec5c13; }
+    50% { background-color: #f37135; }
+    100% { background-color: #ec5c13; }
+}
+
+button[name="clear"] {
+    font-family: "Poppins";
+    background-color: #fffff0;
+    border: none;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 2px 1px;
+    border-radius: 4px;
+}
+
+select {
+    color: black;
+    font-size: 0.9em;
+}
+
+select, table {
+    margin-bottom: 1em;
+    font-family: "Orbitron";
+    background-color: #ec5c13;
+}
+
+table {
+    color: black;
+}
+
+span[name="lights"] {
+    cursor: pointer;
+}
+
+span[name="example"] {
+    cursor: pointer;
+    color: #1d1d1d;
+    padding-right: 1em;
+}
+
+#prompt {
+    white-space: pre-wrap;
+}
+
+.textarea {
+    border: 1px solid #ccc;
+    font-family: "Poppins";
+    color: #474747;
+    font-size: initial;
+    padding: 1px 6px;
+    display: block;
+    width: 98%;
+    overflow: hidden;
+    resize: both;
+    min-height: 110px;
+    line-height: 30px;
+}
+
+.textarea[contenteditable]:empty::before {
+    content: "Type your prompt HERE";
+    color: gray;
+}
+
+span[name="counter"] {
+    font-family: "Orbitron";
+    color: black;
+}
+
+#counter {
+    margin-bottom: 0.75em;
+    color: black;
+}
+
+#charCount {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: black;
+}
+
+#characters {
+    font-family: Poppins;
+    font-size: 0.75em;
+    color: black;
+}
+
+#header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-bottom: 1em;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerElementLeft {
+    width: 5%;
+    height: 1em;
+    text-align: left;
+}
+
+.headerElementCenter {
+    width: 90%;
+    height: 1em;
+    text-align: center;
+}
+
+.headerElementRight {
+    width: 5%;
+    height: 1em;
+    text-align: right;
+}
+
+#response {
+    margin-top: 1em;
+    font-size: initial;
+    line-height: 30px;
+    color: #474747;
+}
+
+#receipt {
+    margin-top: 1em;
+    color: #1d1d1d;
+    font-size: 0.9em;
+    text-align: right;
+    font-family: "Orbitron";
+}
+
+#logo {
+    cursor: pointer;
+}

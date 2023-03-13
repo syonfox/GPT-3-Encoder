@@ -10,6 +10,10 @@
   "author": "syonfox",
   "license": "ISC",
   "dependencies": {
-    "gptoken": "^0.0.0"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "gptoken": "^0.0.0",
+    "node-fetch": "^2.6.9",
+    "socket.io": "^4.6.1"
   }
 }
