@@ -44,6 +44,12 @@ const app = express();
 // Serve the 'public' folder at the root of the application using an absolute path
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
+app.use('/js/gptoken', express.static(path.join(__dirname, 'node_modules/gptoken')));
+
+// app.get(, (req, res) => {
+//     res.sendFile(path.join(__dirname, 'node_modules', 'gptoken', 'browser.js'));
+// });
+
 
 // Start the server
 app.listen(3000, () => {
