@@ -3,7 +3,7 @@
 
 const {encode, decode, countTokens, tokenStats} = require('../index')
 
-const str = 'This is an example sentence to try encoding out on!'
+const str = 'This is an example sentence to try encoding out on!';
 const encoded = encode(str)
 console.log('Encoded this string looks like: ', encoded)
 

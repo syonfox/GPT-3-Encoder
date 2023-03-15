@@ -58,7 +58,7 @@ app.get("/getAssistant", jan.checkAuthenticated, (req,res)=> {
 
     let user = req.user
 
-    let
+    // let
 
 
 })
