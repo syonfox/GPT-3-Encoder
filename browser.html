@@ -6,7 +6,7 @@
   <body>
     <h1>GPToken Demo</h1>
     <p>To install with npm:</p>
-    <pre class="prettyprint source"><code><span class="pln">npm install </span><span class="lit">@syonfox</span><span class="pun">/</span><span class="pln">gpt</span><span class="pun">-</span><span class="lit">3</span><span class="pun">-</span><span class="pln">encoder</span></code></pre>
+    <pre class="prettyprint source"><code><span class="pln">npm install gptoken </span></code></pre>
     <h2>Usage</h2>
     <a href="https://www.npmjs.com/package/gptoken">
       <img src="https://img.shields.io/npm/v/gptoken.svg" alt="npm version">
@@ -28,10 +28,10 @@
     <script type="application/javascript" src="./browser.js"></script>
 
     <script>
-        const tokens = gpt3encoder.encode('Hello, world!');
-        const text = gpt3encoder.decode(tokens);
-        const tokenCount = gpt3encoder.countTokens('Hello, world!');
-        const tokenStats = gpt3encoder.tokenStats('Hello, world!');
+        const tokens = gptoken.encode('Hello, world!');
+        const text = gptoken.decode(tokens);
+        const tokenCount = gptoken.countTokens('Hello, world!');
+        const tokenStats = gptoken.tokenStats('Hello, world!');
       const input = document.getElementById('input');
       const encoded = document.getElementById('encoded');
       const decodeButton = document.getElementById('decode-button');
@@ -42,25 +42,25 @@ const countButton = document.getElementById('count-button');
 
       document.getElementById('encode-button').addEventListener('click', () => {
         const text = input.value;
-        const tokens = gpt3encoder.encode(text);
+        const tokens = gptoken.encode(text);
         encoded.innerHTML = JSON.stringify(tokens);
       });
 
       decodeButton.addEventListener('click', () => {
         const tokens = JSON.parse(encoded.innerHTML);
-        const text = gpt3encoder.decode(tokens);
+        const text = gptoken.decode(tokens);
         decoded.innerHTML = text;
       });
 
       countButton.addEventListener('click', () => {
         const text = input.value;
-        const tokenCount = gpt3encoder.countTokens(text);
+        const tokenCount = gptoken.countTokens(text);
         count.innerHTML = tokenCount;
       });
 
       statsButton.addEventListener('click', () => {
         const input = document.getElementById('input').value;
-        const tokenStats = gpt3encoder.tokenStats(input);
+        const tokenStats = gptoken.tokenStats(input);
         stats.innerText = JSON.stringify(tokenStats, null , 4);
       });
     </script>
