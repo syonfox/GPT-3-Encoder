@@ -11,9 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "gptoken": "^0.0.0",
+    "gptoken": "^0.0.5",
     "node-fetch": "^2.6.9",
-    "socket.io": "^4.6.1"
+    "socket.io": "^4.6.1",
+    "uuid": "^9.0.0"
   }
 }

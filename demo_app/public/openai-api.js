@@ -57,7 +57,9 @@ function countCharacters() {
     //Twitter character limit for reference
     const MAX_COUNTER = 280;
 
-    let numOfCharsEntered = promptSpan.innerText.length.toString();
+    let text = promptSpan.innerText;
+
+    let numOfCharsEntered = text.length.toString();
     let spans = document.querySelectorAll("span[name='counter']");
     for (let i = 0; i < spans.length; i++) {
         if (numOfCharsEntered > MAX_COUNTER) {
@@ -71,7 +73,8 @@ function countCharacters() {
             }
         }
     }
-    charSpan.innerText = numOfCharsEntered;
+    let numTokens = gptoken.countTokens(text);
+    charSpan.innerText =  "Tokens: "+numTokens.toString()+ " | "+numOfCharsEntered;
 }
 
 /*
@@ -399,7 +402,7 @@ function getStylesheet() {
     } else {
         document.write(CSS_DARK);
     }
-    setGitHubImageAndLogo(timeColor);
+    // setGitHubImageAndLogo(timeColor);
 }
 
 /*
@@ -407,18 +410,18 @@ This function takes in a parameter "timeColor" and uses it to determine the sour
 If "timeColor" is equal to "dark", the source of the image is set to "../images/github-mark-white.png", and if it's not, the source is set to "../images/github-mark.png".
 This function is likely used to switch the image source depending on the time of day or user preferences.
  */
-function setGitHubImageAndLogo(timeColor) {
-    let ghImg = document.getElementById("gh-img");
-    let logoImg = document.getElementById("logo");
-    ghImg.src = "";
-    if (timeColor === "dark") {
-        ghImg.src = "../images/github-mark-white.png";
-        logoImg.src = "../images/sopmac-ai-white.png";
-    } else {
-        ghImg.src = "../images/github-mark.png";
-        logoImg.src = "../images/sopmac-ai-black.png";
-    }
-}
+// function setGitHubImageAndLogo(timeColor) {
+//     let ghImg = document.getElementById("gh-img");
+//     let logoImg = document.getElementById("logo");
+//     ghImg.src = "";
+//     if (timeColor === "dark") {
+//         ghImg.src = "../images/github-mark-white.png";
+//         logoImg.src = "../images/sopmac-ai-white.png";
+//     } else {
+//         ghImg.src = "../images/github-mark.png";
+//         logoImg.src = "../images/sopmac-ai-black.png";
+//     }
+// }
 
 /*
 This function is used to switch between the light and dark stylesheets based on the current stylesheet.
@@ -442,7 +445,7 @@ function switchStylesheet() {
         document.getElementById("darkCSS").remove();
         setSheet("lightCSS", "./light.css");
     }
-    setGitHubImageAndLogo(newColor);
+    // setGitHubImageAndLogo(newColor);
     countCharacters();
 }
 

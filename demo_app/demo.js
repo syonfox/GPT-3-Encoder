@@ -11,9 +11,11 @@ const streamOne  = require('./streamOne');
 
 const {encode, decode, countTokens, tokenStats} = gptoken;
 
+const utils = require("./utils");
 const aiia = require("./aiia");
+
 // import aiia from "./aiia"
-streamOne.test();
+// streamOne.test();
 
 const str = 'This is an example sentence to try encoding out on!'
 const encoded = encode(str)
@@ -42,9 +44,48 @@ aiia.init.openai(process.env.OPENAI_API_KEY)
 const app = express();
 
 // Serve the 'public' folder at the root of the application using an absolute path
-const publicPath = path.join(__dirname, 'public');
-app.use(express.static(publicPath));
 app.use('/js/gptoken', express.static(path.join(__dirname, 'node_modules/gptoken')));
+
+const publicPath = path.join(__dirname, 'public');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
+app.get('/chat', async (req,res)=>{
+    // let other = utils.reqGetData(req, 'other');//todo pig pub key
+    // let username = utils.reqGetData(req, 'username');
+    // let user = utils.reqGetData(req, 'user');
+    // //todo
+    // let group = utils.reqGetData(req, 'group');
+    // let file = utils.reqGetData(req, 'file');
+
+    // let uu, access;
+
+    let uuid = utils.uuidv4();
+
+
+
+    // if(!user) {
+    //     user = username;
+    // }
+    // if(!user) {
+    //     //well no user provided chat with the bot.
+    //     console.warn("Chat: No other user found. NOt chating with anyone but yourself.")
+    // }
+    //this is importent it is the access check to ensure these useres are a part of the same organizations
+    // this happens when a user is a member of the same group.  We can add this but editing the user group relations table
+    // let ret = await rm.access_user_user_named.select('*', {u1:req.user.id, u2:user})
+    // if(ret.success && ret.data[0]) {
+    //     access = true;
+    //     uu = ret.data[0]
+    // }
+
+    res.render('chat', {title: 'AIIA Chat' ,req});
+})
+
+
+app.use(express.static(publicPath));
 
 // app.get(, (req, res) => {
 //     res.sendFile(path.join(__dirname, 'node_modules', 'gptoken', 'browser.js'));

@@ -23,7 +23,20 @@ const modelToPrice/*: Record<OpenAIModel, number>*/ = {
     'text-davinci-003': 0.02,
     'code-cushman-001': 0.0,
     'code-davinci-002': 0.0,
+    'gpt-3.5-turbo': 0.002
 };
+
+
+/**
+ * INformation flow
+ *
+ * CLient msg -> server -> streamOne -> stream back to client
+ * -> onDone Save to db
+ * -> accept new message
+ */
+
+
+
 const gptoken = require("gptoken");
 
 class TextCompletion {
@@ -36,7 +49,25 @@ class TextCompletion {
 
 }
 
+class TextChat {
+    constructor(prompt, config) {
+
+        this.done = false;
+        streamOne()
+    }
+
+    _onToken() {
+
+    }
+
+    _onDone() {
+
+    }
+
+}
+
 class Token {
+    static INCLUDE_ROLE = true;
 
     /**
      * Represents all we can know about a token from a streamed response
@@ -60,6 +91,18 @@ class Token {
      * @param choice
      */
     constructor(choice) {
+
+
+        if (choice && choice.delta) {
+            this._parseChat(choice)
+        } else {
+            this._parseCompletion(choice);
+        }
+
+        return this;
+    }
+
+    _parseCompletion(choice) {
         this.text = choice.text;
         this.token = gptoken.encode(this.text);
         this.choice = choice;
@@ -68,19 +111,50 @@ class Token {
 
         this.text_offset = this.logprobs.text_offset[this.log_index];
         this.prob = this.logprobs.token_logprobs[this.log_index];
-
     }
+
+    _parseChat(choice) {
+        //chat only hase a small amount  of data
+
+        this.text = "";
+        if (choice.delta.role) {
+            this.role = choice.delta.role;
+            if (Token.INCLUDE_ROLE) {
+                this.text = this.role + ": "
+            }
+        }
+
+
+        if (choice.delta.content) {
+            this.text += choice.delta.content;
+        }
+
+        this.choice = choice
+    }
+
 }
 
-function estamateTokens(prompt, response_limit=0) {
+function estamateTokens(prompt, response_limit = 0) {
     return gptoken.countTokens(prompt) + response_limit
 }
+
+
+/**
+ *
+ * @param model - a model name
+ * @param prompt - text prompt or array of messages (role, content) depending if you want to do chat completion or old style
+ * @param onToken - a function on data recieved
+ * @param onDone - on stream end or [DONE]
+ * @param onError - error handle
+ * @param otherOptions - override model options and som other stuff
+ */
 
 // TODO: estimate prompt tokens / cost including prompt tokens
 async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) {
 
     // verify model and get price
     const price = modelToPrice[model];
+    //todo check if model is chat or completion
     if (price === undefined) throw new Error('Unknown model: ' + model);
 
 
@@ -91,21 +165,36 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
     let top_p = otherOptions.topP || 0.8 // 0 to 1
     let n = otherOptions.n || 1; // not sure this working with stream
     let logprobs = otherOptions.logProbs || 0; // 0 - 5
-    let best_of = otherOptions.bestOf || 1; // not sure this working with stream
+    let best_of = otherOptions.bestOf || n; // not sure this working with stream
     let stop = otherOptions.stop || null; //string or array  Optional  Defaults to null  Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
     let frequency_penalty = 0.2;
     let presence_penalty = 0.1;
     let endpoint = otherOptions.endpoint || "/v1/completions"
 
+    let isChatMode = Array.isArray(prompt);
+    let message = {role: "assistant", content: ""};
+    ;
+    let body;
+    if (isChatMode) {
+        endpoint = '/v1/chat/completions';
+        console.log("Executing in chat mode and will return the new message/ delta objects")
 
-    // create stream
-    const fetchPromise = fetch(`https://api.openai.com${endpoint}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
+        body = JSON.stringify({
+            model,
+            messages: prompt,
+            max_tokens,
+            temperature,
+            n,
+            // best_of,
+            // logprobs,
+            stop,
+            frequency_penalty,
+            presence_penalty,
+            stream: true
+        })
+    } else {
+
+        body = JSON.stringify({
             model,
             prompt,
             max_tokens,
@@ -117,7 +206,18 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
             frequency_penalty,
             presence_penalty,
             stream: true
-        }),
+        })
+    }
+
+    // create stream
+    let now = Date.now();
+    const fetchPromise = fetch(`https://api.openai.com${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+        body: body,
     }).catch(e => {
         //catch network error/ fetch bugs
         console.error("Fetch Error: What is wrong? ", e);
@@ -125,24 +225,25 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
     });
 
 
-    //handel response
+//handel response
     const response = await fetchPromise;
+
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
 
 
-    // keep track of tokens
-    // let full_text = prompt; // in c we could make this a buffer of size prompt + limit
-    // and insert tokend by index for max performance.
+// keep track of tokens
+// let full_text = prompt; // in c we could make this a buffer of size prompt + limit
+// and insert tokend by index for max performance.
     let tokens = []
-    let concat = '';
+    // let concat = '';
 
     let completionTokenCount = 0;
 
-    // read stream
+// read stream
     let gotReaderDone = false;
     let gotDoneMessage = false;
-    console.debug("ttfb... openai-processing-time: ", response.headers.get("openai-processing-ms"))
+    console.debug("ttfb(", Date.now() - now, ")... openai-processing-time: ", response.headers.get("openai-processing-ms"))
 
     while (true) {
         // get next chunk
@@ -152,6 +253,7 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
             break;
         }
         const text = decoder.decode(value);
+
         // console.log(text);
         // split chunk into lines
         // todo: there's probs a better way to do this idk seems ok.
@@ -174,21 +276,32 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
 
                 //completion.addToken(choice);
 
-                let myToken = new Token(choice);
 
-                completionTokenCount++; // tokens.length??
+                // if()
+                let myToken = new Token(choice);
+                if (isChatMode) {
+                    if (choice.delta.role) {
+                        message.role = choice.delta.role;
+                    }
+                    if (choice.delta.content) {
+                        message.content += choice.delta.content
+                    }
+                } else {
+                    message.content += myToken.text;
+                }
+
+
+                if (myToken.text) {
+                    completionTokenCount++; // tokens.length??
+                }
                 tokens.push(myToken);
 
-                // const logprobs = choice.logprobs;
-                // const token = choice.text;
-                // let i = choice.index;
-                // let prob = logprobs.token_logprobs[i];
-                // let text_offset = logprobs.text_offset[i];
-                // let text = logprobs.tokens[i];
-
-                // let top_p = logprobs.top_logprobs;
-                concat += myToken.text;
-                onToken(myToken.text, myToken, parsed, response);
+                // concat += myToken.text;
+                // if(isChatMode) {
+                onToken(myToken, message, parsed, response);
+                // } else {
+                //     onToken(myToken.text, myToken, parsed, response);
+                // }
             } catch (error) {
                 // todo: handle error better -- retry? inform caller?
                 console.error(`Could not JSON parse stream message`, {text, lines, line, lineMessage, error});
@@ -205,18 +318,18 @@ async function streamOne(model, prompt, onToken, onDone, onError, otherOptions) 
         }
         if (gotDoneMessage) break;
     }
-    const fullCount = estamateTokens(prompt+concat)
+    const fullCount = estamateTokens(prompt + message.content)
     const cost = completionTokenCount / 1000 * price;
     const fullCost = fullCount / 1000 * price;
 
     console.log(` Streamed ${completionTokenCount} tokens. $${cost} ... full cost with prompt(${fullCount}): $${fullCost}`);
-    console.log('Final text:', prompt + concat);
 
-    console.log("Full req+res token count: ", );
+    console.log("Full req+res token count: ",);
 
-    // let promptCount =     gptoken.countTokens(prompt)
 
-    onDone(prompt, concat, tokens, fullCost,  response);
+    onDone(prompt, message, tokens, fullCost, response);
+
+    return message;
 }
 
 streamOne.modelToPrice = modelToPrice;
@@ -228,11 +341,23 @@ streamOne.modelToPrice = modelToPrice;
  */
 streamOne.test = async function () {
     function onToken(text, token, parsed, response) {
-        console.log("Got Token: ", text, token.prob, token.text_offset )
+        if (token.role) {
+            console.log(token.content);
+        } else
+            console.log("Got Token: ", text, token.prob, token.text_offset);
+
     }
 
     function onDone(prompt, data, tokens, cost, response) {
         console.log("Got Data: ", data)
+        if (typeof prompt !== "string") {
+            //then we probably have an array of messages
+            let s = ""
+            prompt.forEach(m => {
+                s += m.role + ": " + m.content + "\n";
+            })
+            prompt = s;
+        }
         let fulltext = prompt + data;
         console.log(fulltext)
 
@@ -247,9 +372,14 @@ streamOne.test = async function () {
         "What is the inspirational quote of the day in one sentence? \n QOTD: ",
         onToken, onDone, onError, {stop: ['.'], logProbs: 3});
 
+    let data2 = await streamOne("gpt-3.5-turbo",
+        [{role: "user", content: "What is the inspirational quote of the day in one sentence? \n QOTD: "}],
+        onToken, onDone, onError, {endpoint: "/v1/chat/completions", logProbs: 3});
+
+
     //You can't be a real country unless you have a beer and an airline- it helps if you have some kind of a football team, or some nuclear weapons, but at the very least you need a beer
 
-    console.log("Data Resolved:", data);
+    // console.log("Data Resolved:", data2);
 }
 module.exports = streamOne;
 

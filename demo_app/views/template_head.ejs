@@ -1,0 +1,120 @@
+<head>
+
+    <%/*
+    This template head will evolve into out nobs css only template
+    This does have bootstrap as well as some other components you can use
+
+    mainly the nice input box
+
+    */%>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+
+    <%-// include('../partials/icon') %>
+
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="https://map.endpoint.ca/css/core_bundle.min.css">
+
+
+    <%-//include('./styles')%>
+
+</head>
+
+<!--SLOW 3g 6x slowdown-->
+<!--WITHOUT BIG BOY JS-->
+<!--4 requests-->
+<!--85.0 kB transferred-->
+<!--192 kB resources-->
+<!--Finish: 5.49 s-->
+<!--DOMContentLoaded: 5.56 s-->
+<!--Load: 5.57 s-->
+
+<!--
+WITH BIG BOY JS
+6 requests
+478 kB transferred
+1.8 MB resources
+Finish: 13.23 s
+DOMContentLoaded: 13.60 s
+Load: 13.62 s
+-->
+
+
+<!--
+No THROTALING (600ms server)
+6 requests
+478 kB transferred
+1.8 MB resources
+Finish: 1.33 s
+DOMContentLoaded: 1.40 s
+Load: 1.41 s
+-->
+
+<script src="https://bsjs.sgol.pub/js/all.js"></script>
+<!--<script src="https://map.endpoint.ca/js/libCoreHead.min.js"></script>-->
+<script>
+    bs.resNotify = res => {
+        let color = 'danger';
+        let icon = 'fa fa-times'
+        if (res.success) {
+            color = 'success';
+            icon = 'fa fa-check'
+        }
+
+
+        if (res.color) {
+            color = res.color;
+        }
+
+        if (res.debug) {
+            console.log(res.debug);
+            if (res.debug.code == "22007") {
+                res.msg = "Invalid datetime format please use dd/mm/yy (Error: 22007)"
+            }
+            if (res.debug.code == "42501") {
+                res.msg = "Insufficient privileges to execute query (Error: 42501)"
+            }
+
+            if (res.debug.code == "22P02") {
+                if (res.debug.detail) res.msg = res.debug.detail + `(Error: 22P02)`;
+                else res.msg = "Invalid Input Type (Error: 22P02)"
+            }
+            if (res.debug.code) {
+                res.msg += " (Error: " + res.debug.code + ")";
+            }
+
+        }
+
+
+        //beutify error messages for users
+        let fileExistsRE = /(Key\s\(file_name\)=\()(.+)(\)\salready\sexists)/
+        let match = res.msg.match(fileExistsRE);
+        if (match) {
+            res.msg = `A file with the name: ${match[2]} already exists. Please enter a unique file name.`
+        }
+
+        let cc = 'info';
+        if (color) {
+            cc = 'bg-'+color + ' filled'
+        } else {
+            res.success ? 'success filled' : 'danger filled'
+        }
+
+        jsPanel.hint.create({
+            position: 'right-top 0 15 down',
+            contentSize: '330 auto',
+            content: '<p>' + res.msg + '</p>',
+            theme: cc,
+            headerTitle: res.success ? '<i class="fa fa-check mr-2"></i>Success' : '<i class="fa fa-times mr-2"></i>Error',
+            animateIn: 'animate__animated animate__bounceInUp',
+            animateOut: 'animate__animated animate__bounceOutUp',
+            autoclose: {
+                background: color
+            }
+        });
+
+
+    }
+</script>
+<!---->

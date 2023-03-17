@@ -15,6 +15,11 @@
     "bpe_data/encoder.py",
     "bpe_data/encoder.json",
     "bpe_data/vocab.bpe",
+    "demo_app/streamOne.js",
+    "demo_app/aiia.js",
+    "demo_app/openai_model_info.js.js",
+    "demo_app/urils.js",
+
     "README.md"
   ],
   "scripts": {

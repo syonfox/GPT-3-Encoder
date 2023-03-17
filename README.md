@@ -30,7 +30,7 @@ console.log("TokenStats: ", JSON.stringify(gptoken.tokenStats(tokens)));
 //or browser demo
 firefox ../node_modules/gptoken/browser.html
 ```
-
+Or check out the full express demo
 ```sh
 cd demo_app
 npm install 
@@ -105,11 +105,11 @@ const gptoken = require('gptoken');
 ### Additional Features (check out the docs :)
 
 In addition to the original `encoding` and `decoding` functions, this fork includes the following additional features:
+
 `countTokens(text: string): number`
-
 This function returns the number of tokens in the provided text, after encoding it using BPE.
-`tokenStats(text: string): object`
 
+`tokenStats(text: string): object`
 This function returns an object containing statistics about the tokens in the provided text, after encoding it using
 BPE. The returned object includes the following properties:
 
@@ -119,10 +119,21 @@ BPE. The returned object includes the following properties:
 - `postions`: an object mapping tokens to positions in the encoded string
 - `tokens`: same as the output to tokens
 
-- Compatibility
+## Compatibility
 
-This library is compatible with both Node.js and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
-Credits
+### Node.js 12+
+This library is compatible with both Node.js
+`const gptoken = require('gptoken');`
+and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
+### Browser
+`<script src="/js/gptoken/browser.js"></script>`
+and
+
+`cp -r node_modules/gptoken ./public/js/gptoken` or
+
+`app.use('/js/gptoken', express.static(path.join(__dirname, 'node_modules/gptoken')));`'
+
+## Credits
 
 This library was created as a fork of the original GPT-3-Encoder library by latitudegames.
 

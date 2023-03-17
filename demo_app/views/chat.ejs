@@ -1,0 +1,1828 @@
+<!doctype html>
+<html lang="en">
+<!--<%- include('./template_head') %>-->
+<style>
+    /* M E N U */
+    html, body {
+        /*background: #252C33;*/
+        font-family: 'Lato', sans-serif;
+        margin: 0px auto;
+    }
+
+    ::selection {
+        background: rgba(82, 179, 217, 0.3);
+        color: inherit;
+    }
+
+    .menu {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        height: 50px;
+        background: rgba(27, 35, 42, 0.9);
+        z-index: 100;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .back {
+        position: absolute;
+        width: 90px;
+        height: 50px;
+        top: 0px;
+        left: 0px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 45px;
+        font-size: 40px;
+        padding-left: 10px;
+        cursor: pointer;
+        transition: .15s all;
+    }
+
+    .back img {
+        position: absolute;
+        top: 5px;
+        left: 30px;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 100%;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        -ms-border-radius: 100%;
+        margin-left: 15px;
+    }
+
+    .back:active {
+        background: rgba(0, 0, 0, 0.15);
+    }
+
+    .name {
+        position: absolute;
+        top: 3px;
+        left: 110px;
+        font-family: 'Lato';
+        font-size: 25px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.98);
+        cursor: default;
+    }
+
+    .last {
+        position: absolute;
+        top: 30px;
+        left: 115px;
+        font-family: 'Lato';
+        font-size: 11px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: default;
+    }
+
+    .members {
+        position: absolute;
+        top: 30px;
+        left: 115px;
+        font-family: 'Lato';
+        font-size: 11px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: default;
+        word-spacing: 2px;
+    }
+
+    /* M E S S A G E S */
+
+    .chat {
+        list-style: none;
+        background: none;
+        margin: 0;
+        padding: 0 0 50px 0;
+        margin-top: 60px;
+        margin-bottom: 15px;
+    }
+
+    .chat li {
+        padding: 0.5rem;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .chat .day {
+        position: relative;
+        display: block;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.3);
+        height: 20px;
+        text-shadow: 7px 0px 0px #252C33, 6px 0px 0px #252C33, 5px 0px 0px #252C33, 4px 0px 0px #252C33, 3px 0px 0px #252C33, 2px 0px 0px #252C33, 1px 0px 0px #252C33, 1px 0px 0px #252C33, 0px 0px 0px #252C33, -1px 0px 0px #252C33, -2px 0px 0px #252C33, -3px 0px 0px #252C33, -4px 0px 0px #252C33, -5px 0px 0px #252C33, -6px 0px 0px #252C33, -7px 0px 0px #252C33;
+        box-shadow: inset 20px 0px 0px #252C33, inset -20px 0px 0px #252C33, inset 0px -2px 0px rgba(255, 255, 255, 0.1);
+        line-height: 38px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        cursor: default;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .chat .notification {
+        position: relative;
+        display: inherit;
+        text-align: center;
+        font-size: 13px;
+        color: var(--text-bright);
+        /*background: rgba(234, 247, 255, 0.535);*/
+        background: rgb(217 235 232 / 55%);
+
+        line-height: 30px;
+        border-radius: 100px;
+        margin: 7px 35%;
+        height: 30px;
+        width: 30%;
+        box-shadow: 0px 1px 0px rgba(0, 0, 0, .05), 0px -1px 0px rgba(0, 0, 0, .05), inset 0px 1px 0px rgba(255, 255, 255, .02), inset 0px -1px 0px rgba(255, 255, 255, .02);
+        text-shadow: 0px -1px 0px rgba(0, 0, 0, .1), 0px 1px 0px rgba(255, 255, 255, .05);
+        cursor: default;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        transition: all .2s cubic-bezier(0.565, -0.260, 0.255, 1.410);
+    }
+
+    .chat .notification time {
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        font-size: 11px;
+        padding: 8px;
+        border-radius: 100px;
+        background: #78aeee;
+        box-shadow: 0px 0px 2px rgba(255, 255, 255, .02), inset 0px 0px 1px rgba(27, 35, 42, 0.1);
+        height: 1px;
+        line-height: 0px;
+        color: var(--text-bright);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        transition: all .2s cubic-bezier(0.565, -0.260, 0.255, 1.410);
+    }
+
+    .other .msg {
+        border-top-left-radius: 0px;
+        box-shadow: -1px 2px 0px #c1cbcd;
+    }
+
+    .other:before {
+        content: "";
+        position: relative;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        width: 0px;
+        height: 0px;
+        border: 5px solid #eef8ff;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    .self {
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .self .msg {
+        border-bottom-right-radius: 0px;
+        box-shadow: 1px 2px 0px #c1cbcd;
+    }
+
+    .self:after {
+        content: "";
+        position: relative;
+        display: inline-block;
+        float: right;
+        bottom: 0px;
+        right: 0px;
+        width: 0px;
+        height: 0px;
+        border: 5px solid #eef8ff;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        box-shadow: 0px 2px 0px #c1cbcd;
+    }
+
+    .msg {
+        background: #eef8ff;
+        min-width: 50px;
+        padding: 10px;
+        border-radius: 2px;
+        word-break: break-all;
+    }
+
+    .msg .user {
+        font-size: 14px;
+        margin: 0 0 2px 0;
+        color: #666;
+        font-weight: 700;
+        margin-top: -2px;
+        margin-bottom: 5px;
+        transition: all .2s ease;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .msg .user .range.admin {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 300;
+        color: #6aea96;
+        padding: 2px;
+        border-radius: 3px;
+        border: solid 1px #6aea96;
+        background: rgba(255, 255, 255, 0);
+        margin-left: 5px;
+    }
+
+    .msg p {
+        font-size: 13px;
+        margin: 0 0 2px 0;
+        color: #777;
+        transition: all .2s ease;
+    }
+
+    .msg img {
+        position: relative;
+        display: block;
+        width: 600px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px #eee;
+        transition: all .8s cubic-bezier(0.565, -0.260, 0.255, 1.410);
+        cursor: default;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .msg time {
+        font-size: 0.7rem;
+        color: rgba(0, 0, 0, .35);
+        margin-top: 3px;
+        float: right;
+        cursor: default;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .msg time:before {
+        content: "\f017";
+        color: #ddd;
+        font-family: FontAwesome;
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    emoji {
+        display: inline-block;
+        height: 18px;
+        width: 18px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-top: -7px;
+        margin-left: 2px;
+        margin-right: 2px;
+        transform: translate3d(0px, 4px, 0px);
+    }
+
+    emoji.please {
+        background-image: url(https://imgur.com/ftowh0s.png);
+    }
+
+    emoji.lmao {
+        background-image: url(https://i.imgur.com/MllSy5N.png);
+    }
+
+    emoji.happy {
+        background-image: url(https://imgur.com/5WUpcPZ.png);
+    }
+
+    emoji.pizza {
+        background-image: url(https://imgur.com/voEvJld.png);
+    }
+
+    emoji.cryalot {
+        background-image: url(https://i.imgur.com/UUrRRo6.png);
+    }
+
+    emoji.books {
+        background-image: url(https://i.imgur.com/UjZLf1R.png);
+    }
+
+    emoji.moai {
+        background-image: url(https://imgur.com/uSpaYy8.png);
+    }
+
+    emoji.suffocated {
+        background-image: url(https://i.imgur.com/jfTyB5F.png);
+    }
+
+    emoji.scream {
+        background-image: url(https://i.imgur.com/tOLNJgg.png);
+    }
+
+    emoji.hearth_blue {
+        background-image: url(https://i.imgur.com/gR9juts.png);
+    }
+
+    emoji.funny {
+        background-image: url(https://i.imgur.com/qKia58V.png);
+    }
+
+    emoji.shit {
+        background-image: url(https://i.imgur.com/H5Jba8r.png);
+    }
+
+    @-webikt-keyframes pulse {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 0.5;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        min-width: 12px;
+        width: 12px;
+        max-width: 12px;
+        min-height: 12px;
+        height: 12px;
+        max-height: 12px;
+        background: #252C33;
+        box-shadow: inset 0px 50px 0px rgba(27, 35, 42, 0.9), inset 0px -50px 0px #eee;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 100px;
+        border: solid 3px #252C33;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-button {
+        display: block;
+        height: 26px;
+    }
+
+    /* T Y P E */
+    .typezone {
+        position: fixed;
+        display: flex;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        height: 50px;
+        z-index: 99;
+        background: #eee;
+        border: none;
+        outline: none;
+    }
+
+    .typezone > textarea,
+    .typezone > textarea:hover {
+        /*position: absolute;*/
+        bottom: 0px;
+
+        left: 8%;
+        right: 8%;
+        width: 80%;
+        height: 50px;
+        z-index: 100;
+        background: #fafafa;
+        border: none;
+        outline: none;
+        padding-left: 2%;
+        padding-right: 2%;
+        padding-top: 2%;
+        color: #666;
+        font-weight: 400;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        overflow: hidden;
+        resize: none;
+        z-index: 200;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        transition: all .3s cubic-bezier(0.85, -0.1, 0.22, 1.08);
+    }
+
+    #svg-bg {
+        filter: brightness(0.5) blur(6px);
+    }
+
+    .typezone > textarea:focus {
+        height: 300px;
+        transform: translateY(-300px);
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /*.emojis {*/
+    /*    position: relative;*/
+    /*    display: block;*/
+    /*    bottom: 0px;*/
+    /*    left: 0px;*/
+    /*    width: 8%;*/
+    /*    height: 50px;*/
+    /*    background-image: url(/assets/img/icons/team-svgrepo-com.svg);*/
+    /*    background-repeat: no-repeat;*/
+    /*    background-size: 34px 34px;*/
+    /*    background-position: 45% 9px;*/
+    /*    z-index: 100;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    .team-btn {
+        position: relative;
+        display: block;
+        bottom: 0px;
+        left: 0px;
+        width: 8%;
+        height: 47px;
+        background-image: url(/assets/img/icons/team-svgrepo-com.svg);
+        background-repeat: no-repeat;
+        background-size: 30px 30px;
+        background-position: 50% 50%;
+        z-index: 100;
+        border: 4px solid;
+        background-color: var(--teal);
+        border-color: var(--teal);
+
+    }
+
+    .team-btn:hover {
+        border-color: var(--teal);
+
+        opacity: 0.9;
+    }
+
+    .team-btn:active {
+        opacity: 0.9;
+    }
+
+    .send-btn {
+        position: relative;
+        display: block;
+        bottom: 0px;
+        right: 0px;
+        width: 8%;
+        height: 50px;
+        border: 4px solid;
+        outline: none;
+        z-index: 100;
+        cursor: pointer;
+        background-image: url(/assets/img/icons/chat-svgrepo-com.svg);
+        background-repeat: no-repeat;
+        background-size: 34px 34px;
+        background-position: 45% 9px;
+        /*background-color: rgba(255, 255, 255, 0);*/
+        background-color: var(--yellow);
+        border-color: var(--yellow);
+    }
+
+    .send-btn:active {
+        opacity: 0.85;
+    }
+
+    /* R E S P O N S I V E   C O N F I G U R A T I O N */
+
+    @media screen and (max-width: 750px) {
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chat {
+            margin-bottom: 55px;
+        }
+
+        .msg p {
+            font-size: 11px;
+        }
+
+        .msg .user {
+            font-size: 13px;
+        }
+
+        .msg img {
+            width: 300px;
+        }
+
+        .chat .notification {
+            font-size: 12px;
+            margin: 7px 30%;
+            width: 40%;
+        }
+
+        .chat .day {
+            font-size: 11px;
+        }
+
+        .team-btn {
+            width: 25%;
+        }
+
+        .send-btn {
+            width: 25%;
+        }
+
+        textarea {
+            left: 0px;
+            right: 0px;
+            bottom: 50px;
+            padding-left: 5%;
+            padding-right: 5%;
+            padding-top: 20px;
+            width: 90%;
+            border-radius: 0px;
+            height: 28px;
+            background: #fafafa;
+            box-shadow: none;
+            transition: all .4s cubic-bezier(0.2, -0.2, 0.2, 1.2);
+        }
+
+        textarea:focus {
+            height: 30vh;
+            margin-top: 30vh;
+            box-shadow: 0px -20px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        form:focus ~ .typezone {
+            bottom: 50vh;
+        }
+    }
+
+    @media screen and (max-width: 550px) {
+        .msg p {
+            max-width: 250px;
+        }
+
+        .msg img {
+            width: 200px;
+        }
+
+        .chat .notification {
+            font-size: 12px;
+            margin: 7px 0px;
+            width: 100%;
+            border-radius: 0px;
+        }
+
+        .chat .notification time {
+            right: 10px;
+        }
+    }
+</style>
+
+<body>
+<!--content-->
+
+<svg id="svg-bg"></svg>
+<div class="spacer"></div>
+<!--<div class="card" style="max-width: 550px; margin: auto">-->
+<!--    &lt;!&ndash;                <form id="login-form" method="POST" action="/jan/login">&ndash;&gt;-->
+
+<!--    <h2 style="text-align:center;">Login To ENDpoint&lt;!&ndash; <svg src="/assets/img/endpoint_logo.svg"></svg>&ndash;&gt;</h2>-->
+<!--    <label class="input" title="Jan accepts case insensitive usernames or emails.">-->
+<!--        <input id='username' class="input__field" type="text" placeholder=" " autocomplete="username">-->
+<!--        <span class="input__label">Username</span>-->
+<!--    </label>-->
+<!--    <label class="input" title="A good way of setting passwords is to think of an ubsurd thing or phrase.">-->
+<!--        <input id="pw" class="input__field" type="password" placeholder=" " autocomplete="current-password">-->
+<!--        <span class="input__label">Password</span>-->
+<!--    </label>-->
+<!--    <button id="submit" onclick="tryLogin()">Login</button>-->
+<!--    &lt;!&ndash;                </form>&ndash;&gt;-->
+<!--    &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--    &lt;!&ndash; <a href="auth/forgotPassword" class="">Forgot Password</a> &ndash;&gt;-->
+<!--    <br>-->
+<!--    <p class="login-quote">-->
+<!--        &lt;!&ndash;                    Jan uses secure practices, to keep you data safe, we avoid as much of facbooks and mircosofts code.&ndash;&gt;-->
+<!--        &lt;!&ndash;                    Only google, us and the nsa know. Pretty tight nit group 😀. &ndash;&gt;-->
+<!--        We care about your privacy, Please use a secure password to avoid highly skilled attacks.-->
+<!--        We recommend at least 12 characters these days. By using our service you acknowledge that you agree to our <a href="/legal/end-user-licence-agreement" title="End User Licence Agreement">EULA</a>-->
+<!--        <small>-->
+<!--            <br>-->
+
+<!--            Please check your email for a welcome message from info@support.ca<br>-->
+<!--            Your username follows the pattern first name last initial.<br>-->
+<!--            So if your name is Jane Doe your username will be: janed <br>-->
+<!--            For Support Email support@endpoint.ca <br>-->
+<!--        </small>-->
+<!--    </p>-->
+
+<!--</div>-->
+
+<div class="menu">
+    <a href="#" class="back"><i class="fa fa-angle-left"></i> <img alt="Profile Photo" src="<%- req.user.photo %>"
+                                                                   draggable="false"/></a>
+    <div class="name">
+        <%= req.user.fname %> <%= req.user.lname %>
+        <b> --BETA 🧪</b>
+    </div>
+    <div class="members">
+        <b>EndPoint Chat</b> <input value="room1">  <h5>This is an desentralized chat system, thats why you need your own pin.</h5>
+
+    </div>
+</div>
+<ol class="chat">
+    <li class="other">
+        <div class="msg">
+            <div class="user">Super Cat<span class="range admin">Admin</span></div>
+            <p>Wow much chat, lets see what this thing can do!</p>
+            <p>Dont let anoying third parties listen in with an added layer of encryption on top of ssl and basic authentication.
+                Not even our admins can decrypt your mesages, Dont forget your password or answer otherwise messages are lost forever.
+                <button onclick="c.recoverPin()">Recover Pin</button><button onclick="c.createUser()">Factory Reset</button>
+                <!--                <emoji class="pizza"></emoji>-->
+            </p>
+            <time>8:42</time>
+        </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <p>Puff...</p>
+            <p>Cool but, Why another chat app?
+                <!--                <emoji class="books"></emoji>-->
+            </p>
+            <p>Like I just want a text message.</p>
+            <time>20:18</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Super Cat<span class="range admin">Admin</span></div>
+            <p>We are working on integration with whatsapp, mobile phones, and email to forward you messages, this is inherently les secure as messages are sent over regular https pipes without the direct peer to peer encryption.</p>
+            <p>There is lots or room for improvement in the communication space, hopefully some of our elegant apis catch on.
+            </p>
+            <time>8:42</time>
+        </div>
+    </li>
+
+<!--    <div class="day">Today</div>-->
+
+    <p class="notification">You Seasion Starts Here</p>
+<!--        <time>18:09</time>-->
+<!--    </p>-->
+<!--    <li class="self">-->
+<!--        <div class="msg">-->
+<!--            <p>Heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeellooooooooooooooooooooooooooooooo David-->
+<!--                &lt;!&ndash;                <emoji class="smile"/>&ndash;&gt;-->
+<!--            </p>-->
+<!--            <time>18:09</time>-->
+<!--        </div>-->
+<!--    </li>-->
+<!--    <li class="other">-->
+<!--        <div class="msg">-->
+<!--            <div class="user">David</div>-->
+<!--            <p>What is that-->
+<!--                &lt;!&ndash;                <emoji class="shit"></emoji>&ndash;&gt;-->
+<!--                ?-->
+<!--            </p>-->
+<!--            <time>18:10</time>-->
+<!--        </div>-->
+<!--    </li>-->
+<!--    <p class="notification">David left the group-->
+<!--        <time>18:11</time>-->
+<!--    </p>-->
+</ol>
+<div class="typezone">
+    <button class="team-btn"></button>
+    <textarea type="text" placeholder="Say something"></textarea>
+    <button type="submit" class="send-btn" value=""></button>
+</div>
+
+
+<%-// include('./template_scripts') %>
+
+
+<!-- Gun -->
+<!--<script src="./node_modules/gun/gun.js"></script>-->
+<!--<script src="./node_modules/gun/sea.js"></script>-->
+
+<!--libs-->
+<!--<script type="text/javascript" src="./js/lib/qrcode.js"></script>-->
+<!--<script src="./node_modules/clipboard/dist/clipboard.min.js"></script>-->
+
+<!--code-->
+<!--<script src="./js/bs.js"></script>-->
+<!--<script src="./js/Bullet.js"></script>-->
+<script src="./node_modules/bullchat/js/ArrayInput.js"></script>
+<script src="./node_modules/bullchat/js/BullChat.js"></script>
+<script src="./node_modules/bullchat/js/GunAuth.js"></script>
+
+<script>
+
+
+    var gun = new Gun({
+        // peers: ['http://bullchat.syon.ca:8585/gun'],
+        peers: ['https://bullchat.syon.ca/gun'],
+    });
+
+
+    function uuidv4() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
+
+    var gunAuth = new GunAuth(gun);
+
+    var username = '<%- req.user.username %>'
+    var user_id = '<%- req.user.id %>'
+
+    // gunAuth.loginUser()
+
+    let outbox;
+    // gunAuth.promiseAuth().then(user => {
+    //     console.log("A user is logged in")
+    //     outbox = gunAuth.user.get('#outbox').set()
+    // })
+
+
+    async function postMessage(to, msg) {
+
+        await gunAuth.promiseAuth();
+        let data = {
+            msg: msg,
+            to: to,
+            from: from,
+            time: Date.now()
+        }
+
+        let pair = gunAuth.getPair();
+        let signed = SEA.sign(data, pair);
+        let payload = SEA.encrypt(signed, to);
+
+        gun.get(from).get(outbox).get(to).set(payload)
+
+    }
+
+    async function gatherConversation(other) {
+        let pair = gunAuth.getPair();
+        let self = '~' + pair.pub
+        if (other[0] != '~') other = '~' + other;
+        gun.get(other).get(outbox).get(self).on(d => {
+            console.log('got other msgs ', d);
+
+        })
+        gun.get(self).get(outbox).get(other).on(d => {
+            console.log('got self msgs ', d);
+        })
+    }
+
+    // gun.auth = gunAuth;
+
+    class EPChat {
+
+        /**
+         * Construct a chat instance with someone
+         * @param el - the chat ol Element
+         * @param user - the user row from pg
+         * @param other - pub key of other person we are chating with.
+         * @return {boolean}
+         */
+        constructor(el, user, other) {
+
+
+            if (!user) {
+                console.error("Please pass in the user row for ep chat to know how is chatting")
+                return false;
+            }
+            this.user = user;
+
+            if (!user) {
+                console.error("Error: user is required ensure you pas it from pg");
+
+            }
+            if (!user.json) {
+                console.error("You user  table is fucked add default '{}' to json field");
+            }
+            if (!user.json.pig) {
+                console.log("User not in pig will need to be createded later.");
+            }
+            this.setupGunAuth(user)
+
+            this.login().then(async gu => {
+                    await this._afterLogin(gu);
+                    this.other = other;
+                    if (!this.other) {
+                        console.warn("No other person specified in this.other or passed, assuming you want to send this mesage to yourself.constructor");
+                        this.other = this.self;
+
+                        this.otherUser = this.gunAuth.gun.get('~'+this.other);
+                        let osea = this.otherUser.get('sea');
+                        osea.get('epub').once(epub=>{
+                            console.log("Got Others encryption key");
+                            this.epubOther = epub;
+                            this.otherPair = {
+                                pub: this.other,
+                                epub: epub
+                            }
+                        })
+
+                        //setup gun to listen for msgs
+                        this._getSelfMsgs();
+                        if(this.self != this.other) {
+                            this._getOtherMsgs();
+                        }
+                    }
+
+                }
+            )
+
+
+            this.prevMsg = {};
+
+            // <ol class="chat">
+            this.div = bs.getContainer(el)
+            // this.__chat = this.div;
+
+            this.__spacer = $(`<p class="notification">David joined the group<time>18:09</time>    </p>`);
+            this.__day = $(`<div class="day">Today</div>`);
+
+            /**
+             *
+             * @param who == self for users msgs;
+             * @param msg
+             * @param time
+             * @return el - the htmlElement to append to table
+             */
+            this.el = bs.getContainer(el);
+            this.__chat = this.el;
+            this.__sendBtn = document.querySelector('.send-btn')
+            this.__teamBtn = document.querySelector('.team-btn')
+            this.__input = document.querySelector('.typezone > textarea')
+
+            this.__input.addEventListener('input', e => {
+                console.log('msg change')
+            })
+
+            this.__sendBtn.addEventListener('click', async e => {
+                console.log('send msg');
+                let msgSpec = await this.sendMsg(this.__input.value)
+
+            })
+
+            //Initialize gun
+
+            // this.setupGunAuth(user)
+            // this.login();
+        }
+
+        async _afterLogin() {
+            let gu = this.gunAuth.user;//trest
+            if (!gu.is) {
+                console.error("Didn't get a logged in gun user! Failing");
+                return;
+            }
+            this.self = gu.is.pub;
+            this.outbox = this.gunAuth.user.get('outbox');
+
+
+        }
+
+
+        //
+        // createMsg = (who, msg, time) => {
+        //     let el = document.createElement('li');
+        //
+        //     el.id = bs.uuidv4();
+        //
+        //     let msg =
+        //
+        //     if (who == 'self' || who == this.self) {
+        //         el.classList.addClass('self');
+        //         who = bs.niceName(this.user.fname) + " " + bs.niceName(this.user.lname);
+        //     } else {
+        //         els.addClass('other')
+        //     }
+        //     el.innerHTML = `
+        //     <div class="msg">
+        //         <div class="user">${who}</div>
+        //         ${msg}
+        //         <time>$(new Date(time).toLocaleString())</time>
+        //     </div>
+        //     `
+        //
+        //     return el;
+        // }
+
+
+        //get the pub given some identifier we use
+        _x2pub(x) {
+            //is x an alias
+            //is x a salt
+            //is x a user id
+            //is x a username
+            //is x a email
+            //is x a pub
+            //is x a user object
+
+            //is x a resorce id;
+
+            //cant find
+            return "Not implemented";
+        }
+
+
+        /**
+         * struct
+         * @param from - your pubkey
+         * @param to - other users pubkey
+         * @param text - the html to render gets sanitized no js
+         * @param [time=Date.now()]
+         * @param [prev=this.prevMsg.__id] the last msg in the list.
+         * @param [id=uuidv4()] -
+         * @return {{other, self, text, time: number}}
+         */
+        msgSpec(from, to, text, time, prev, id) {
+            return {
+                from, to,
+                text: bs.sanitizeHtmlString(text),
+                prev: prev ? prev : this.prevMsg.__id || null,
+                time: time ? new Date(time).getTime() : new Date().getTime(),
+                id: id || bs.uuidv4(),
+            }
+        }
+
+        /**
+         * pub keys with no ~ pls
+         * @param who - ~pub or pub not
+         * @param other - defiantly no ~
+         * @private
+         */
+        _getMsgs(who, other) {
+            let pub = who;
+            let gunWho = pub[0] === '~' ? pub : '~' + pub;
+
+            let node = this.gunAuth.gun.get(gunWho);
+
+            let room = node.get('outbox').get(other).get('msgs');
+            room.map().on(async m => {
+                console.log("got msg: ", m);
+                // this.insertMsg();
+                 let d
+                if(m.substring(0,3) === "SEA") {
+                    console.log("Encrypted ... decrypti" +
+                        "ng");
+                    let secret = await SEA.secret(this.epubOther, this.pair)
+                    d = await SEA.decrypt(m, secret);
+                    console.log(d);
+
+
+                }
+                let spec;
+                if(d) spec = d;
+                else spec = JSON.parse(m)
+                let pos = this.insertMsg(spec);
+                console.log("Inserted msg at index: ", pos, 'of ', this.__msgList.length, ' msgs time: ',spec.time,'; text:', spec.text);
+            })
+
+
+        }
+        _stopListening() {
+            //todo
+        }
+
+        _getSelfMsgs() {
+            this._getMsgs(this.self, this.other)
+        }
+
+        _getOtherMsgs() {
+            this._getMsgs(this.other, this.self)
+        }
+
+        /**
+         * Accepts msg spec objects
+         * @param {Array<msgSpec>} msgs
+         */
+        setMsgs(msgs) {
+
+
+            this.div.innerHTML = '';
+
+
+            msgs = msgs.sort((a, b) => a.time - b.time)
+
+            msgs.forEach(m => {
+                // let spec = this.msgSpec()
+                let msg = this.buildMsgDom(m)
+                this.insertMsg(msg);
+                // this.div.appendChild(msg)
+            });
+
+
+        }
+
+
+        /**
+         * This builds the dom in the context of this chat instance.
+         * Ie this.other and this.self so a message from anyones outbox can be used.
+         * We also add the spec back into the element in el.__from = from ...
+         *
+         * @param spec - @see {msgSpec}
+         * @return {HTMLPreElement | HTMLLIElement | HTMLElement}
+         */
+        buildMsgDom(spec) {
+            let {from, to, text, time, prev, id} = spec;
+
+            let who = from;
+            // if (!time) time = Date.now();
+            let date = new Date(time);
+            // <li class="self">
+            //     <div class="msg">
+            //         <p>Ehh, the launcher crash...
+            //             <emoji class="cryalot"></emoji>
+            //         </p>
+            //         <time>18:08</time>
+            //     </div>
+            // </li>
+            let el = document.createElement('li');
+            //add id for looking up msg;
+            el.id = id
+            el.__id = el.id;// redundant;
+            el.__time = date.getTime();//for sorting/inserting later;
+            el.__from = from; // curious
+            el.__to = to;
+            el.__text = text;
+            el.__prev = prev;
+
+            let msgDiv = document.createElement('div');
+            msgDiv.classList.add('msg')
+            let userDiv = document.createElement('div');
+
+            if (who == 'self' || who == this.self) {
+                el.classList.add('self');
+                who = bs.niceName(this.user.fname) + " " + bs.niceName(this.user.lname);
+            } else {
+                els.classList.add('other')
+                // let userDiv = document.createElement('div');
+                userDiv.classList.add('user');
+                userDiv.innerText = who
+
+                let gunWho = gun.get('~' + who);
+
+                gunWho.get('user').get('username').once(otherName => {
+                    userDiv.innerText += otherName;
+                })
+            }
+
+
+            let timeDiv = document.createElement('time');
+
+
+            let startOfDay = new Date(Date.now());
+            startOfDay.setHours(0);
+            startOfDay.setMinutes(0);
+            startOfDay.setSeconds(0);
+
+            let delta = startOfDay - date;
+
+            //if the msg is old show full date otherwise just time;
+            timeDiv.innerText = delta < 0 ? date.toLocaleString() : date.toLocaleTimeString();
+
+
+            // let msgDiv = document.createElement('p');
+
+
+            // <li class="other">
+            //     <div class="msg">
+            //         <div class="user">Brotons</div>
+            //         <p>What comment about Góngora?
+            //             <emoji class="suffocated"></emoji>
+            //         </p>
+            //         <time>20:18</time>
+            //     </div>
+            // </li>
+            msgDiv.appendChild(userDiv);
+            //todo msg content genorator
+            msgDiv.innerText = bs.sanitizeHtmlString(text);
+            msgDiv.appendChild(timeDiv);
+            el.appendChild(msgDiv);
+
+            return el;
+        }
+
+        /**
+         * Accepts msg dom or spec and inserts it in the chat.
+         * @param msg
+         * @return index of place msg is in this.__msgList;
+         */
+        insertMsg(msg) {
+
+            if (!(msg instanceof HTMLElement)) msg = this.buildMsgDom(msg);
+
+            //for fast access of msg by id;
+            if (!this.__msgList) this.__msgList = [];
+            if (!this.__msgMap) this.__msgMap = {};
+
+            if(this.__msgMap[msg.__id]) {
+                console.warn("Already inserte msg it can be found here: ", this.__msgMap[msg.__id])
+                // return this.__msgMap[msg.__id];
+                return -1;
+            }
+
+            this.__msgMap[msg.__id] = msg;
+
+
+            let prevMsg = this.__msgMap[msg.__prev];
+
+            if (prevMsg) {
+                prevMsg.after(msg);
+                let index = this.__msgList.findIndex(m => m.__id === prevMsg.__id);
+                this.msgList.splice(index, 0, msg);
+                return index + 1;
+            }
+
+            //else lets place ist based on time
+
+            let largerMsg = this.__msgList[this.__msgList.length];
+
+            //if no msgs or the last message is before this one.
+            if (!largerMsg || largerMsg.__time <= msg.__time) {
+                this.el.appendChild(msg);
+                this.__msgList.push(msg);
+                return this.__msgList.length - 1;//index of our new entry.
+            }
+            //else we go up in revers order till we find its place.
+            let smallerMsg;
+            //find the place
+            let i;
+            for (i = this.__msgList.length - 1; i >= 0; i--) {
+                let pointer = this.__msgList[i];
+                if (pointer.__time <= msg.__time) {
+                    smallerMsg = pointer;
+                    smallerMsg.after(msg);//insert dom note after
+                    this.__msgList.splice(i, 0, msg)
+                    return i + 1; // insert after the first smaller msg
+                    break;
+                } else {
+                    largerMsg = pointer;
+                }
+                // if(msg.__time < largerMsg.__time && msg.__time >= smallerMsg.time)
+            }
+
+
+            // //           search msges v  where this timeV  matches
+            // let prevMsg = this.__msgList.find(m=>m.__time==this.__msgMap[msg.__prev].time);
+            //
+
+
+            //todo search with context of a few elements before and after.
+            // funtion windowSearch(a, w, fn) {
+            //
+            // }
+
+            this.__timeList.splice()
+
+
+            if (this.prevMsg)
+
+                this.__timeMap[msgDom.__time] = msg.__id;
+
+
+        }
+
+        /**
+         *
+         * @param text - the content string (html)
+         * @param [other=this.other] - the person we are sending to deful
+         * @param [self=this.self]
+         */
+        async sendMsg(text, other, self) {
+
+            other = other || this.other;
+
+            if (!other) {
+                console.warn("No other person specified in this.other or passed, asuming you want to send this mesage to yourself.constructor");
+                other = this.self;
+
+            }
+
+            if (!self) self = this.self;
+
+            let spec = this.msgSpec(this.self, this.other, text)
+
+            // let dom = this.buildMsgDom(spec);
+
+
+            // let msg = this.createMsg(text);//this is a mesage we are sending
+
+            // let m = {//all msg data
+            //     text, self, other, time: msg.__pos, id: msg.__id
+            // }
+
+
+            // let pos = this.insertMsg(spec);
+            // console.log("Inserted msg at index: ", pos, 'of ', this.__msgList.length, ' msgs');
+            // this.outbox.get(other).get(self).set(spec);
+
+            //todo encrypt
+
+            let msgStr = JSON.stringify(spec)
+
+            // var enc = await SEA.encrypt('shared data', await SEA.secret(bob.epub, alice));
+
+            let secret = await SEA.secret(this.epubOther, this.pair)
+            let emsg = await SEA.encrypt(msgStr,secret);
+            // let dmsg = await SEA.decrypt(emsg, this.pair.epriv)
+
+            this.outbox.get(other).get('msgs').set(emsg);
+
+            /*
+            Each msg when sent
+
+            web5 very dense comment.
+            just implement user to user communication, then all endpoint ids are users
+            and we make a bot to listen for msgs and add them to db.
+            // also send to other users. or user endpoint credentals and give them our plain text.
+
+            theoretically any user can host a group ( decentralized :)  But we host the group for all things in endpoint.
+
+
+            write to outbox/id
+            server:
+                when group first accessed generation pair;
+                when user chats decrypt all msgs and  encrypt with users pub.
+                when user sends propagate to all users.
+
+
+
+            client:
+                writes msg to outbox.
+
+
+                reads msgs from outbox and other outbox.
+
+            group msging:
+             */
+        }
+
+        //Initalize gunAuth
+        setupGunAuth(user) {
+            // this.user = user;
+            this.gunAuth = new GunAuth(gun);
+
+            this.alias = "ep_chat_d_" + user.username;
+
+            this.pw = user.id + "$U$"
+
+        }
+
+
+        /**
+         * This is responsible for logging in a  user.
+         * It will prompt them for their cat pin.
+         */
+        async login() {
+            return new Promise(async resolve => {
+
+
+                //Eatch seasion should remeber pin in local storage onec authenticated
+                if (!this.gunAuth.isLoggedIn() || !this.pair) {
+
+                    //if the user exists in pig already then log in
+                    let exists = await this._userExists()
+
+
+                    if (!exists) {// otherwise lets create it
+                        console.log("Creating user for fist time, I hope.");
+                        let r = await this.createUser();
+                        resolve(this.gunAuth.user)
+                        return; // creat user should log us in
+                    } else {
+                        console.log("User found lets log in");
+                    }
+                    //finally launch if no other path chosen
+                    let launchPin = (forgot) => {
+
+                        return bs.prompt("Chat Pin", {
+                            pin: 'input',
+                            // remeber_pin: 'checkbox'
+                        }, {}, {prependHTML: ("Please enter your pin code to decrypt your messages." + forgot ? " Did you want to recover with hint? todo" : "")})
+
+                            .then(async data => {
+
+
+                                let pair = await this.recoverPair(data.pin)
+
+                                if (!pair) launchPin(true);
+                                // let pair = await this._usePin()
+                                resolve(this.gunAuth.user)
+
+
+                                // this.gunAuth.user.auth(this.alias, this.pw + data.pin, ack => {
+                                //     if (ack.err) {
+                                //
+                                //         console.error(ack.err, 'ddd',this.alias, this.pw + data.pin);
+                                //         bs.resNotify({success: false, msg: ack.err})
+                                //         launchPin()
+                                //     } else {
+                                //         console.log("Logged in user", this.gunAuth.user._.sea);
+                                //         // this.gatherMsgs();
+                                //     }
+                                // })
+
+                            })
+                    }
+                    return launchPin();
+                } else {
+                    console.log("User Already Logged In");
+
+                    resolve(this.gunAuth.user)
+                }
+            });
+        }
+
+        /*  bs.prompt("Chat Pin", {
+              pin: 'input',
+              remeber_pin: 'checkbox'
+          }, {}, {prependHTML: "Please enter your pin if you have not doen this before please create pin"})
+              .then(data => {
+                  gunAuth.user.auth(username, id + '$#$' + data.pin, (ack) => {
+                      if (ack.err) {
+                          gunAuth.user.create(username, id + '$#$' + data.pin, (ack) => {
+                              gunAuth.user.auth(username, id + '$#$' + data.pin, (ack) => {
+                                  if (ack.err) {
+                                      console.error("WTF YOU NO EXIST: ", ack.err)
+                                  } else {
+                                      console.log("Successfully Authenticated Use using Pin after creating user")
+                                  }
+                              })
+
+                          })
+                      } else {
+                          console.log("Successfully Authenticated User using Pin")
+
+                      }
+                  });
+              })
+*/
+
+
+        /**
+         * Verify if gun knows about this user already
+         * Read code for details but now checks pg for pair. more reliable :) and we need to know anyway
+         * @return {Promise<boolean>}
+         * @private
+         */
+        async _userExists() {
+
+            return new Promise((resolve, reject) => {
+
+                let pig = this.user.json.pig
+                if (pig && pig.salt) {
+                    console.log("User found in pig");
+                    resolve(pig.ePair);
+
+                    this.gunAuth.findFrozen(pig.salt, (data, key, tags, hash) => {
+                        console.log("Pair found in gun by salt", data, key)
+                    })
+                    this.gunAuth.findFrozen(c.alias, (data, key, tags, hash) => {
+                        console.log("Pair found in gun by alias", data, key)
+                    })
+                    return;
+                }
+                //else lets try and look it up todo curently borked up
+                //i think its to do with the tag in gunAUth.registerRecovery is not being set
+                this.gunAuth.findFrozen(this.alias,
+                    (data, key, tags, hash) => {
+                        console.log("Pair found", data, key)
+                    },
+                    {node: '#gunAuthRecovery'}
+                ).then((u) => {
+                    resolve(u)
+                });
+
+
+                setTimeout(() => {
+                    console.error("No user found in 6 seconds so we are failing");
+                    // die()
+                    resolve(false);
+                }, 6000)
+            })
+            // let   ePair = await this.gunAuth.findFrozen(this.alias, (data, key, tags, hash) => {
+            //     console.log("Pair found", data, key)
+            // }, {node: '#gunAuthRecovery'})
+            // return    !!        ePair;        // let soles = await this.gunAuth.getSolesByAlias(this.alias);
+            // let exists = !!soles;
+            // if (exists) this.soles = soles
+            // return exists;
+
+        }
+
+        async createUser(data) {
+
+            let title = 'Create Pin';
+            let template = {
+                new_pin: {type: 'input', inputType: 'password', placeholder: "Chose a encryption pin."},
+                confirm_pin: {
+                    type: 'input',
+                    placeholder: 'Ensure you remember this pin',
+                    title: 'This passphrase is used to encrypt your messages. If made sufficiently secure not even we can read your messages.'
+                },
+                hint: {
+                    type: 'datalist',
+                    data: ["Whats Your favorite Quote?", "Theoretical it's almost perfect if you chose a strong pin and no answer :)", "Whats your childhood activity of choice?", "Whats your favored food?", "What is the most exiting event you have attended?", "Whats your inside joke with steve?", "You know steve right?", "Whats the Make and model of your first car?"],
+                    placeholder: "Enter Security Question.",
+                    title: "This Question when answered will allow you to recover your pin. And thus decrypt your chats"
+                },
+                answer: {
+                    type: 'input',
+                    placeholder: 'Recovery Phrase',
+                    title: "If you are forgetful pick an obvious question that you wil know the answer to. " +
+                        "Try to make it non generic/social engineer-able"
+                }
+            };
+
+            //lets ask the user what they want as a pin
+            bs.prompt(title, template, data, {
+                prependHTML:
+                    `
+            This is opt in security for your messaging.
+            Ideally you use a strong passphrase and dont forget it. If you fear you may forget provide a hint for yourself.
+            If you wish to be able to recover you pin, provide an recovery phrase/ answer. This will save an encrypted pin for recovery with us.
+            If you wish, a simple pin can be used which is still better then nothing and is not hard to remember.
+            `
+            }).then(async data => {
+
+                //no trivial
+                if (data.new_pin.length < 4) {
+                    bs.resNotify({success: false, msg: 'You Must Enter a Pin of Length 4 or More!'});
+                    this.createUser(data)
+                    return;
+
+                }
+                // no forgt
+                if (!!data.new_pin.localeCompare(data.confirm_pin)) {
+                    bs.resNotify({success: false, msg: 'Pins Do Not Match'});
+                    data.confirm_pin = '';
+                    this.createUser(data);
+                    return;
+                }
+
+                let userMetaPig = {
+                    hint: data.hint,
+                    pin: data.new_pin,
+                    answer: data.answer,
+                }
+                // no send to us confirm
+                let deedDone = false;
+                if (!data.answer) {
+                    deedDone = await bs.prompt("Are you sure you wish to opt out. if you forget your password messages will be lost.", {
+                        opt_out: 'checkbox'
+                    }, undefined, {prependHTML: "Are you sure you wish to opt out of pin recovery? THis is more secure but less user friendly."}).then(data2 => {
+
+                        if (data2.opt_out) {
+                            bs.resNotify({
+                                success: true,
+                                msg: "You have opted out of pin recovery, please remember you password so we don't have to."
+                            })
+                            return false
+                        } else {
+                            bs.resNotify({
+                                success: false,
+                                msg: "Recovery Opt Out Not Confirmed. Please pick an answer you will remember."
+                            })
+                            this.createUser(data);
+                            return true;
+                        }
+                    }).catch(e => {
+                        bs.resNotify({
+                            success: false,
+                            msg: "Recovery Opt Out Not Confirmed. Please pick an answer you will remember."
+                        })
+                        this.createUser(data);
+                        return true;
+                    })
+                    if (deedDone) return;
+                }
+
+
+                let pig = await this.createPair(data.new_pin, data.answer, data.hint);
+
+                // pig.hint = hint;
+                let res = await bs.postJson('/api/account/createPin', pig);
+
+                let upItsThere = res.data[0].json.pig;//there should only be one user returned.
+
+                console.log("pig in user:", upItsThere);
+                // gunAuth.user.create(this.alias, this.pw + data.new_pin, (ack) => {
+                //     if (ack.err) {
+                //         console.error(ack.err);
+                //     } else {
+                //         gunAuth.user.auth(username, this.pw + data.new_pin, (ack) => {
+                //             if (ack.err) {
+                //                 console.error("WTF YOU NO EXIST: ", ack.err)
+                //             } else {
+                //                 console.log("Successfully Authenticated Use using Pin after creating user")
+                //             }
+                //         })
+                //     }
+                // })
+
+            }).catch(e => {
+                console.error(e)
+                bs.resNotify({success: false, msg: 'Failure is not an option. You must create a pin.'});
+                // data.confirm_pin = '';
+                this.createUser(data)
+            })
+
+
+        }
+
+        /**
+         * This function asks user for their pin recover password and request thie pin be emailed to them.
+         * @param data
+         * @return {Promise<void>}
+         */
+        async recoverPin(data) {
+            let hint = this.user.json.pig.hint
+            bs.prompt('ENDpoint Pin Recovery', {
+                answer: {
+                    type: 'input',
+                    placeholder: "Provise your recovery phrase.",
+                    tooltip: "This is what you set up when first using chat."
+                }
+            }, data, {
+                prependHTML: "To recover your pin provide the answer to you security question and we will email you your pin. <br> Hint: " + hint
+            }).then(async data => {
+                let res = await bs.postJson('/api/account/recoverPin', data);
+                bs.resNotify(res);
+                if (!res.success) this.recoverPair(data)
+            })
+        }
+
+        /**
+         * export for recovery
+         *  ,,__       ,,,, <br>
+         * c''  )?   ¿(  ,,ↄ <br>
+         *  ''''       ̅̅'' <br>
+         * @param pair - key pair
+         * @param salt - some entropy
+         * @param pin - main passprase
+         * @param answer - recovery passphrase
+         * @param hint - plain text hint not nessasary for decryption
+         * @return {Promise<{salt, hint, epub: *, alias: string, ePair: *, recovery: *, pub}>}
+         * @private
+         */
+        async _rollPig(pair, salt, pin, answer, hint) {
+            let rKey = await SEA.work(answer, this.user.id)
+            let recovery = await SEA.encrypt(pin, rKey);
+            let eKey = await SEA.work(this.pw + pin, salt)
+            let ePair = await SEA.encrypt(pair, eKey);
+            return {ePair, recovery, hint, salt, alias: this.alias, pub: pair.pub, epub: pair.epub}
+        }
+
+        /**
+         * recover from data
+         * --,,,,/￣￣v ,,＿  <br>
+         * ¿(==,,ↄ  c''==)?  <br>
+         * --￣''      ''''   <br>
+         * Pigs just be rollin'
+         * @param ePair - encrypted key pair
+         * @param recovery - encrypted pin
+         * @param answer - encrypted
+         * @param salt - the randomness
+         * @param hint - just to pass it on. An plain text note to self.
+         * @return {Promise<{salt, pin: *, answer, hint, recovery, pair: *}>}
+         * @private
+         */
+        async _unrollPig(ePair, recovery, answer, salt, hint) {
+            let rKey = await SEA.work(answer, this.user.id); //get the
+            let pin = await SEA.decrypt(recovery, rKey);
+            let eKey = await SEA.work(this.pw + pin, salt);
+            let pair = await SEA.decrypt(ePair, eKey);
+            return {pair, salt, pin, answer, hint, recovery}
+        }
+
+        /**
+         * decrypt pair
+         * @param ePair - the encrypted pair
+         * @param pin - the pin
+         * @param salt - the random salt
+         * @return {Promise<*>} pair
+         * @private
+         */
+        async _usePin(ePair, pin, salt) {
+            // let eKey =
+
+            let pw = pin.includes('$U$') ? pin : this.pw + pin
+            let eKey = await SEA.work(this.pw + pin, salt);
+            let pair = await SEA.decrypt(ePair, eKey);
+            return pair;
+        }
+
+        /**
+         * decrypt recovery
+         * @param recovery
+         * @param answer
+         * @param [salt]
+         * @return {Promise<*>}
+         * @private
+         */
+        async _recoverPin(recovery, answer, salt) {
+            if (!salt) salt = this.user.id;
+            let rKey = await SEA.work(answer, salt); //get the
+            let pin = await SEA.decrypt(recovery, rKey);
+            return pin;
+        }
+
+        //This generates a key and freezes it using the pin.
+        async createPair(pin, answer, hint) {
+            let pw = this.pw + pin;
+            let alias = this.alias;
+            let pair = await SEA.pair();
+
+            await this.gunAuth.user.auth(pair);
+
+            let u = this.gunAuth.user;
+            u.get('sea').get('pub').put(pair.pub);
+            u.get('sea').get('epub').put(pair.epub);
+            let su = await SEA.sign(this.user.username,pair.epriv);
+            u.get('sea').get('username').put(su);
+            u.get('photo').put(this.user.photo);
+
+            let salt = await this.gunAuth.registerRecovery(this.pw + pin)
+
+            let pig = await this._rollPig(pair, salt, pin, answer, hint)
+
+            return pig;
+            // let eKey = await SEA.work(pin, salt)
+            // let rKey = await SEA.work(answer, this.user.id)
+            // let recovery = await SEA.encrypt(pin, rKey);
+            // let ePair = await SEA.encrypt(pair, eKey);
+            // return {salt, recovery, ePair}
+            // this.gunAuth.freeze()
+        }
+
+        //later we can look up the pair by tag and restore it using the pin.
+        /**
+         * Given a pin code will decrypt and login gun user
+         * @param pin - the users encryption pin
+         * @return {Promise<*>} the SEA pair
+         */
+        async recoverPair(pin) {
+            // let pair = await this.gunAuth.recoverPair(this.alias, this.pw + pin)
+
+            let ePair = await this._userExists();
+            if (!ePair) {
+                bs.resNotify({success: false, msg: "Failed to recover your profile, Is your pin right?"})
+                return false;
+            }
+            let pig = this.user.json.pig;
+
+            let pair = await this._usePin(ePair, pin, pig.salt);
+
+            if (!pair) {
+                bs.resNotify({success: false, msg: "Failed to recover your profile, Is your pin right?"})
+                return false;
+            }
+            // let eKey = await SEA.work(pin, pig.salt);
+            // let pair = await SEA.decrypt(pig.ePair, eKey);
+            this.gunAuth.user.auth(pair)
+            this.pair = pair
+            console.log("Restored pair: ", pair)
+            return pair;
+        }
+
+
+        /**
+         * Lets user recover their pin with a secure pgrase
+         * @return {Promise<{msg: string, success: boolean}|{msg: string, success: boolean}|any>}
+         */
+        async recoverPin() {
+
+            let ret;
+            if (!this.user.json.pig) {
+                // !this.user.pig.hint ||
+                ret = {success: false, msg: "Cant recover a users because you have not sent a pig to our farm."}
+                bs.resNotify(ret)
+            } else if (!this.user.json.pig.recovery) {
+
+
+                ret = {success: false, msg: "You have opted out of pin recovery by not setting a security answer."}
+
+
+            }
+
+            if (ret) {
+                bs.resNotify(ret)
+                return ret;
+            }
+
+            return bs.prompt('Recover Pin', {
+                answer: {
+                    type: 'input',
+                    placeholder: "What did you decide when setting up."
+                }
+            }, undefined, {
+                prependHTML: 'We are sorry you cant remember you password. The only way for us to recover it is if you provide your security ansower.' +
+                    '<br> when setting up you set this Hint: ' + this.user.json.pig.hint,
+            }).then(data => {
+
+
+                //todo shoulw we just show the usere their pin?
+                return bs.postJson('/api/account/recoverPin', data).then(res => {
+                    bs.resNotify(res);
+                    return res;
+                })
+            })
+        }
+
+    }
+
+
+    let c = new EPChat('.chat', <%- JSON.stringify(req.user) %>, <%- JSON.stringify(uu) %>);
+    // create/join Broadcast Channel
+    // creates a new broadcast channel object if it does not exist yet
+    // or joins the channel if it already exists
+    const bc = new BroadcastChannel('bcChannel');
+
+
+    // click handler posting a message to the channel
+    document.addEventListener('click', bs.throttle((event) => {
+        bc.postMessage('iframe_clicked');
+    }, 200));
+
+    // let u = document.getElementById('username');
+    // let p = document.getElementById('pw');
+    //
+    // u.addEventListener("keyup", function (event) {
+    //     if (event.key === "Enter") {
+    //         // Do work
+    //         p.focus();
+    //     }
+    // });
+    // p.addEventListener("keyup", function (event) {
+    //     if (event.key === "Enter") {
+    //         // Do work
+    //         tryLogin();
+    //     }
+    // });
+    //
+    // function tryLogin(e) {
+    //     //send login
+    //     //todo send thro gun pipe with roti13
+    //     bs.sendJson('post', '/jan/login', {username: u.value, password: p.value}).then(res => {
+    //
+    //         if (!res.success) {
+    //             console.error(res);
+    //             bs.resNotify(res);
+    //             return;
+    //         }
+    //         //get jwt
+    //         let token = res.token;
+    //         //save jwt
+    //         if (localStorage) {
+    //             localStorage.setItem('loginRes', JSON.stringify(res));
+    //         }
+    //
+    //         //redirect
+    //
+    //         let r = bs.getParams().redirect || '/'
+    //
+    //         window.location = r;
+    //
+    //
+    //     });
+    //
+    // }
+
+
+</script>
+</body>
+</html>
+<script>
+    // import Buttons from "../../public/examples/components/buttons.html";
+    // export default {
+    //     components: {Buttons}
+    // }
+</script>

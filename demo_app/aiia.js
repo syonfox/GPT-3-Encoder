@@ -49,6 +49,10 @@ class Message {
         this._prev = next || null;
     }
 
+    delta(delta) {
+
+    }
+
     static create(obj) {
         let user, content;
 
@@ -68,6 +72,30 @@ class Message {
     toJson() {
         return [{user: this.user, content: this.msg}]
     }
+
+}
+
+
+class Chat {
+
+    constructor(system, model, config) {
+
+        this.msgs = new Messages();
+        this.system = system;
+        confg = config || {};
+        this.model = model;
+        this.config = config;
+        this.config.history_length = config.history_length || 3;
+
+
+    }
+
+    getContext(newMsg) {
+        let c = this.config.history_length || 3
+        return [...this.system,...this.msgs.splice(this.msgs.length-c, c), newMsg];
+    }
+
+
 
 }
 
