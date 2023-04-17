@@ -1,8 +1,14 @@
 # GPToken is an expanded project based on the original 
-<a href="https://www.npmjs.com/package/gpt-3-encoder">
-  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">
-</a>
 
+[//]: # (<a href="https://www.npmjs.com/package/gpt-3-encoder">)
+
+[//]: # (  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">)
+
+[//]: # (</a>)
+
+https://community.openai.com/t/how-do-you-make-a-bpe-file-for-tokenizer/94752/13
+
+https://github.com/blinkdata/c-tokenizer
 
 New
 <a href="https://www.npmjs.com/package/gptoken">

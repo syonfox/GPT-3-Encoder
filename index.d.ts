@@ -1,50 +1,3 @@
-
-// declare module "gptoken" {
-//
-//     export function encode(text: string): number[];
-//
-//     export function decode(tokens: number[]): string;
-//
-//     export function countTokens(text: string): number;
-//
-//     export function tokenStats(input: string | number[]): TokenStats;
-//
-//     export interface TokenStats {
-//         count: number;
-//         unique: number;
-//         frequency: Record<string, number>;
-//         positions: Record<string, number[]>;
-//         tokens: string[];
-//     }
-//
-//     export interface Utils {
-//         ord: (x: string) => number;
-//         char: (x: number) => string;
-//         bpe: number;
-//         range: (start: number, end: number) => number[];
-//         pat: RegExp;
-//         get_pairs: (word: string) => Set<string[]>;
-//         bpe_ranks: Record<string, number>;
-//     }
-//
-//     export const util: Utils;
-// }
-// declare module "@syonfox/gpt-3-encoder" GPToken
-//this dosent seem to work :(
-// export function extendModule<T e declare module "@syonfox/gpt-3-encoder" GPToken
-// xtends Record<string, any>>(moduleName: string, moduleToExtend: T): T {
-//     return {
-//         ...moduleToExtend,
-//         __esModule: true,
-//         default: moduleToExtend,
-//     } as unknown as T & { default: T };
-// }
-
-
-
-
-
-
 /**
  * Module for encoding and decoding text using byte pair encoding (BPE).
  *
@@ -72,8 +25,11 @@
  */
 declare module "gptoken" {
     export function encode(text: string): number[];
+
     export function decode(tokens: number[]): string;
+
     export function countTokens(text: string): number;
+
     export function tokenStats(input: string | number[]): TokenStats;
 
     export interface TokenStats {
@@ -83,6 +39,14 @@ declare module "gptoken" {
         positions: Record<string, number[]>;
         tokens: string[];
     }
+
+    export interface BpeOptions {
+        isDict?: boolean;
+        vocab?: Record<string, number>;
+        merges?: Record<string, string>;
+        separator?: string;
+    }
+
     export interface Utils {
         ord: (char: string) => number;
         chr: (code: number) => string;
@@ -104,10 +68,11 @@ declare module "gptoken" {
         bpe_ranks: Record<string, number>;
         cache: Map<string, number[]>;
     };
-    export interface BpeOptions {
-        isDict?: boolean;
-        vocab?: Record<string, number>;
-        merges?: Record<string, string>;
-        separator?: string;
-    }
+    //
+    // export interface extras {
+    //     streamOne: "function"
+    // }
+
+    // export const extras: require("./extras/index.js")
+    // export const extras:
 }

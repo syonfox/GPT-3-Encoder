@@ -1,4 +1,5 @@
 const { encode, decode, countTokens, tokenStats, util, maps } = require("./Encoder");
+const extras = require("./extras/index.js")
 
 module.exports = {
   encode,
@@ -6,5 +7,6 @@ module.exports = {
   countTokens,
   tokenStats,
   util,
-  maps
+  maps,
+  extras
 };
