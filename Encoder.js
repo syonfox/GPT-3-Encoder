@@ -1,8 +1,11 @@
 
 
-const encoder = require("./bpe_data/encoderMapToTokens");
+// const encoder = require("./bpe_data/unicode_encoder_p50k_base.json");
+// const bpe_ranks = require("./bpe_data/bpe_ranks_50k");
+
 
 // This file includes code which was modified from https://github.com/openai/gpt-2
+const encoder = require("./bpe_data/encoderMapToTokens");
 const bpe_ranks = require("./bpe_data/bpe_ranks");
 
 /**
@@ -46,6 +49,7 @@ const chr = x => {
 const encodeStr = str => {
     return Array.from(Buffer.from(str, 'utf-8')).map(x => x.toString());
 }
+
 
 const decodeStr = arr => {
     return Buffer.from(arr).toString('utf-8')
@@ -136,6 +140,7 @@ Object.keys(encoder).map(x => {
 
 
 const byte_encoder = bytes_to_unicode()
+
 const byte_decoder = {}
 Object.keys(byte_encoder).map(x => {
     byte_decoder[byte_encoder[x]] = x

@@ -1,31 +1,21 @@
-# GPToken is an expanded project based on the original 
+# GPToken 
 
-[//]: # (<a href="https://www.npmjs.com/package/gpt-3-encoder">)
 
-[//]: # (  <img src="https://img.shields.io/npm/v/gpt-3-encoder.svg" alt="npm version">)
+GPToken is a JavaScript library for encoding and decoding text using Byte Pair Encoding (
+BPE), similar to what's used in GPT-2 and GPT-3 models by OpenAI. This project is an
+expanded and enhanced version of the original GPT-3-Encoder.
 
-[//]: # (</a>)
-
-https://community.openai.com/t/how-do-you-make-a-bpe-file-for-tokenizer/94752/13
-
-https://github.com/blinkdata/c-tokenizer
-
-New
-<a href="https://www.npmjs.com/package/gptoken">
-<img src="https://img.shields.io/npm/v/gptoken.svg" alt="npm version">
-</a>
-
-[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/GPT-3-Encoder/)
-
-Also check out the browser demo [browser demo](https://syonfox.github.io/GPT-3-Encoder/browser.html)
-
-[![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/GPT-3-Encoder)](https://github.com/syonfox/GPT-3-Encoder/commits)
-[![example workflow](https://github.com/latitudegames/GPT-3-Encoder/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/GPT-3-Encoder/actions)
+[![npm version](https://img.shields.io/npm/v/gptoken.svg)](https://www.npmjs.com/package/gptoken)
+[![JSDocs](https://img.shields.io/badge/JS%20Docs-Read%20them%20maybe-brightgreen)](https://syonfox.github.io/gptoken/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/syonfox/gptoken)](https://github.com/syonfox/gptoken/commits)
+[![example workflow](https://github.com/syonfox/gptoken/actions/workflows/node.js.yml/badge.svg)](https://github.com/syonfox/gptoken/actions)
 [![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/syonfox/GPT-3-Encoder/tree/GPToken)
 
 
+[browser demo](https://syonfox.github.io/gptoken/browser.html)
+
 # TLDR
-```
+```js
 npm install gptoken
 const gptoken = require('gptoken')
 
@@ -36,67 +26,80 @@ console.log("TokenStats: ", JSON.stringify(gptoken.tokenStats(tokens)));
 //or browser demo
 firefox ../node_modules/gptoken/browser.html
 ```
-Or check out the full express demo
+
+## Installation
+
+You can install GPToken using npm:
+
+```bash
+npm install gptoken
+```
+
+## Usage
+
+To use GPToken in your project, import it as follows:
+
+```javascript
+const gptoken = require('gptoken');
+```
+
+### Encoding and Decoding Text
+
+You can use GPToken to encode and decode text:
+
+```javascript
+const encodedText = gptoken.encode("Hello, world!");
+console.log("Encoded Text: ", encodedText);
+
+const decodedText = gptoken.decode(encodedText);
+console.log("Decoded Text: ", decodedText);
+```
+
+### Counting Tokens and Token Statistics
+
+GPToken provides additional features to work with tokens:
+
+```javascript
+const text = "This is a sample text.";
+const tokenCount = gptoken.countTokens(text);
+console.log("Token Count: ", tokenCount);
+
+const tokenStats = gptoken.tokenStats(text);
+console.log("Token Statistics: ", tokenStats);
+```
+
+Token statistics will include information like the total token count, the number of unique
+tokens, token frequencies, positions, and the tokens themselves.
+
+
+### demo app 
 ```sh
 cd demo_app
 npm install 
 npm start
 ```
 
-# Fork Purpose 
- I have created this to add general gpt helper functionality as well as creat a compleat pakage.
 
- The plan is to clean up and stabilize this original implementation. 
-
- I would like to then make this usefully for other models and features.
-
-# Roadmap 
-  Improved performance
-  More utilities function.
-
-  More research on how to interact with GPT models.
-
-  Add a simple elagent openai api integration so this can be a minimal frontend and backend base.
-
-# Intro
-
-Javascript library for encoding and decoding text using Byte Pair Encoding (BPE), as used in GPT-2 and GPT-3 models by
-OpenAI. This is a fork of the original python implementation by OpenAI, which can be found here.
-
-This fork includes additional features such as the countTokens and tokenStats functions, as well as updated
-documentation.
-
-## Installation
-
-To install with npm:
-
-```
-npm install gptoken
-or old
-npm install @syonfox/GPT3-encoder
-
-```
-
-# Overview 
+# Overview
 
 The main interface is defined in `index.js or index.d.ts`
 
 The code is in `Encoder.js`
 
-The Encoding data/ maps are in the bpe_data directory this is loaded by Encoder to perfrom the conversion.
+The Encoding data/ maps are in the bpe_data directory this is loaded by Encoder to perfrom
+the conversion.
 
 There are useful scripts defined in `pakage.json`
 
 The tests are using `jest` and are defined in `Encoder.test.js`
 
-docs are built using jsdoc `npm run doc` and we need to `cp browser.* docs/` after build so demo works on github pages 
+docs are built using jsdoc `npm run doc` and we need to `cp browser.* docs/` after build
+so demo works on github pages
 
-There are 2 demos one using nodejs `npm run demo` 
+There are 2 demos one using nodejs `npm run demo`
 and one using the browserify version in a html page `npm run browser`
 
-
 ## Usage
-
 
 Compatible with Node >= 12
 
@@ -110,13 +113,16 @@ const gptoken = require('gptoken');
 
 ### Additional Features (check out the docs :)
 
-In addition to the original `encoding` and `decoding` functions, this fork includes the following additional features:
+In addition to the original `encoding` and `decoding` functions, this fork includes the
+following additional features:
 
 `countTokens(text: string): number`
-This function returns the number of tokens in the provided text, after encoding it using BPE.
+This function returns the number of tokens in the provided text, after encoding it using
+BPE.
 
 `tokenStats(text: string): object`
-This function returns an object containing statistics about the tokens in the provided text, after encoding it using
+This function returns an object containing statistics about the tokens in the provided
+text, after encoding it using
 BPE. The returned object includes the following properties:
 
 - `count`: the total number of tokens in the text.
@@ -128,10 +134,14 @@ BPE. The returned object includes the following properties:
 ## Compatibility
 
 ### Node.js 12+
+
 This library is compatible with both Node.js
 `const gptoken = require('gptoken');`
-and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including the data. A compiled version for both environments is included in the package.
+and browser environments, we have used webpack to build /dist/bundle.js 1.5 MB including
+the data. A compiled version for both environments is included in the package.
+
 ### Browser
+
 `<script src="/js/gptoken/browser.js"></script>`
 and
 
@@ -146,7 +156,8 @@ This library was created as a fork of the original GPT-3-Encoder library by lati
 ## Example
 
 See browser.html and demo.js
-Note you may need to include it from the appropriate place in node modules / npm package name
+Note you may need to include it from the appropriate place in node modules / npm package
+name
 
 ```js
 
@@ -204,22 +215,21 @@ npm publish --access public # dev publish to npm
 
 ```
 
-Performance 
+Performance
 
-Built bpe_ranks  in  100 ms
+Built bpe_ranks in 100 ms
 
 // using js loading (probably before cache)
-Loaded encoder  in  121 ms
-Loaded bpe_ranks  in  91 ms
+Loaded encoder in 121 ms
+Loaded bpe_ranks in 91 ms
 
 // using fs loading
-Loaded encoder  in  32 ms
-Loaded bpe_ranks  in  44 ms
+Loaded encoder in 32 ms
+Loaded bpe_ranks in 44 ms
 
 //back to js loading
-Loaded encoder  in  35 ms
-Loaded bpe_ranks  in  40 ms
-
+Loaded encoder in 35 ms
+Loaded bpe_ranks in 40 ms
 
 ## todo
 
@@ -229,17 +239,29 @@ Clean up and keep it simple.
 
 Here are some additional suggestions for improving the GPT-3 Encoder:
 
-- Add more unit tests to ensure the correctness and reliability of the code. This can be particularly important for the
+- Add more unit tests to ensure the correctness and reliability of the code. This can be
+  particularly important for the
   encode and decode functions, which are the main functions of the encoder.
-- Add more documentation and examples to help users understand how to use the encoder and integrate it into their own
-  projects. This could include additional JSDoc comments, as well as additional documentation in the README file and/or
+- Add more documentation and examples to help users understand how to use the encoder and
+  integrate it into their own
+  projects. This could include additional JSDoc comments, as well as additional
+  documentation in the README file and/or
   GitHub Pages.
-- Consider adding support for other languages and character sets. Currently, the encoder only supports ASCII characters,
+- Consider adding support for other languages and character sets. Currently, the encoder
+  only supports ASCII characters,
   but there may be a demand for support for other languages and character sets.
-- Explore potential optimizations and performance improvements for the encode and decode functions. Some ideas might
-  include using faster data structures (such as a hash map or a trie), implementing more efficient algorithms, or using
+- Explore potential optimizations and performance improvements for the encode and decode
+  functions. Some ideas might
+  include using faster data structures (such as a hash map or a trie), implementing more
+  efficient algorithms, or using
   multi-threading or web workers to take advantage of multiple cores or processors.
-- Consider adding support for other models or use cases. For example, you could add support for other OpenAI models (
-  such as GPT-2 or GPT-3) or for other applications of BPE encoding (such as machine translation or natural language
+- Consider adding support for other models or use cases. For example, you could add
+  support for other OpenAI models (
+  such as GPT-2 or GPT-3) or for other applications of BPE encoding (such as machine
+  translation or natural language
   processing).
+
+https://community.openai.com/t/how-do-you-make-a-bpe-file-for-tokenizer/94752/13
+
+https://github.com/blinkdata/c-tokenizer
 

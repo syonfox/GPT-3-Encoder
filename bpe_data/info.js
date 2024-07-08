@@ -1,4 +1,4 @@
-let encoder = require("./encoderMapToTokens")
+ let encoder = require("./encoderMapToTokens")
 
 let count = Object.keys(encoder).length
 
